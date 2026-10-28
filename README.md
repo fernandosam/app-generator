@@ -1,6 +1,6 @@
 # app-generator
 
-**Gerador de interfaces orientado ao contexto** — aplicação independente em **TanStack Start**, React, TypeScript, Tailwind CSS v4 e **coss UI**, com planejamento de tarefas, execução assistida por agente, auditoria contextual e evidências visuais. **Não usa Next.js nem o UI Contract Studio.**
+**Gerador de interfaces orientado ao contexto** — aplicação independente em **TanStack Start**, React, TypeScript, Tailwind CSS v4 e **coss UI**, com planejamento de tarefas, execução assistida por agente, auditoria contextual e evidências visuais.
 
 > Estado: starter funcional no nível do código, com integração ao registro oficial de componentes e ao Codex CLI. **A instalação completa, a renderização no browser e os workflows ainda precisam ser executados em um ambiente com acesso ao npm e ao coss registry.** Não é um editor visual nem um serviço de modelos hospedado.
 
