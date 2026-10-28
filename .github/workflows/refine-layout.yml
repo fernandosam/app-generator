@@ -1,0 +1,73 @@
+name: IA — corrigir layout (manual, PR)
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: refine-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  refine:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verificar configuração da IA
+        env:
+          API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$API_KEY" ]; then
+            echo 'Configure o secret OPENAI_API_KEY para habilitar autocorreção.' >&2
+            exit 1
+          fi
+      - name: Preparar ambiente
+        run: |
+          npm install --no-audit --no-fund
+          npm run ui:install
+          npm install --global @openai/codex
+          npx playwright install --with-deps chromium
+      - name: Avaliar e corrigir (até duas revisões)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LAYOUT_MAX_REVISIONS: '2'
+          LAYOUT_REQUIRE_VISUAL: '1'
+        run: npm run layout:refine
+      - name: Testes após correções
+        run: |
+          npm run test:unit
+          npm test
+          npm run build
+          npm run typecheck
+          npm run layout:audit
+      - name: Guardar relatórios
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: refinement-evidence-${{ github.run_id }}
+          path: |
+            artifacts/
+            test-results/
+          retention-days: 14
+          if-no-files-found: warn
+      - name: Abrir PR de correção
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: ai/refine-layout-${{ github.run_id }}
+          delete-branch: true
+          commit-message: 'fix(layout): refinar composição com evidências'
+          title: 'fix(layout): correções de layout orientadas por auditoria'
+          body: |
+            Correções solicitadas manualmente, limitadas a duas revisões.
+            Relatório e capturas anexados à execução correspondente.
+            O PR mantém revisão normal de código; não faz auto-merge.
+          add-paths: |
+            src/
+            docs/
+            tests/
+            scripts/
+            package.json

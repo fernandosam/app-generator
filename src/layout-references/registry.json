@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "references": [
+    {
+      "id": "registration-split",
+      "screenKinds": [
+        "form"
+      ],
+      "purpose": "Cadastro com contexto institucional e formulário principal",
+      "route": "/",
+      "intent": "src/layout-intents/registration.json",
+      "patterns": [
+        "split",
+        "grouped-fields"
+      ],
+      "source": "local-example",
+      "verified": false,
+      "notes": "Referência de partida, não modelo obrigatório. Marcar verified somente após auditoria real e revisão visual."
+    }
+  ]
+}

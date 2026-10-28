@@ -1,0 +1,77 @@
+{
+  "screens": [
+    {
+      "id": "registration",
+      "path": "/",
+      "kind": "form",
+      "purpose": "Cadastrar usuário com entrada e validação locais",
+      "scenarios": [
+        {
+          "id": "default",
+          "state": "default",
+          "minGroups": 2,
+          "primaryActions": 1
+        },
+        {
+          "id": "invalid",
+          "state": "validation-error",
+          "actions": [
+            {
+              "type": "click",
+              "selector": "[data-layout-primary-action]"
+            }
+          ],
+          "expectInvalid": true,
+          "minGroups": 2,
+          "primaryActions": 1
+        },
+        {
+          "id": "success",
+          "state": "success",
+          "actions": [
+            {
+              "type": "fill",
+              "selector": "#firstName",
+              "value": "Ana"
+            },
+            {
+              "type": "fill",
+              "selector": "#lastName",
+              "value": "Silva"
+            },
+            {
+              "type": "fill",
+              "selector": "#email",
+              "value": "ana@example.com"
+            },
+            {
+              "type": "fill",
+              "selector": "#password",
+              "value": "senha123456"
+            },
+            {
+              "type": "click",
+              "selector": "[data-layout-primary-action]"
+            }
+          ],
+          "expectVisible": "[data-testid=\"confirmation\"]",
+          "minGroups": 0,
+          "primaryActions": 0
+        },
+        {
+          "id": "long-content",
+          "state": "content-stress",
+          "actions": [
+            {
+              "type": "repeatText",
+              "selector": "[data-layout-content]",
+              "times": 5
+            }
+          ],
+          "minGroups": 2,
+          "primaryActions": 1
+        }
+      ]
+    }
+  ]
+}

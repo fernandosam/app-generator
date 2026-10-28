@@ -1,0 +1,49 @@
+name: Layout — cenários, responsividade e evidências
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: layout-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar dependências e componentes
+        run: |
+          npm install --no-audit --no-fund
+          npm run ui:install
+      - name: Instalar Chromium do Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Auditar cenários cadastrados
+        id: audit
+        run: npm run layout:audit
+      - name: Publicar relatório no resumo da execução
+        if: always()
+        shell: bash
+        run: |
+          if [ -f artifacts/layout-report.md ]; then
+            cat artifacts/layout-report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Auditoria não produziu relatório. Consultar os logs.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Guardar capturas, métricas e traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: layout-evidence-${{ github.run_id }}
+          path: |
+            artifacts/
+            test-results/
+          retention-days: 14
+          if-no-files-found: warn
