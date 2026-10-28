@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
-import registry from '../src/layout-intents/screens.json'
+const registry = JSON.parse(readFileSync(new URL('../src/layout-intents/screens.json', import.meta.url), 'utf8'))
 
 type Action = { type: 'fill' | 'click' | 'repeatText'; selector: string; value?: string; times?: number }
 type Scenario = {
