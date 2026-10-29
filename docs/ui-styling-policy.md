@@ -52,7 +52,7 @@ Não introduzir novas cores hexadecimais ou variáveis locais para substituir to
 
 ## Validação
 
-- `npm run test:unit`: verifica presença e consistência das instruções (não é linter CSS).
+- `npm test`: verifica presença e consistência das instruções na suíte Vite+ (não é linter CSS).
 - `npm run verify`: mantêm as garantias técnicas.
 - `npm run layout:audit`: assegura métricas, estados e screenshots sem afirmar aprovação visual perceptiva.
 - Revisão de código: avaliar se CSS adicional foi justificado e se é possível expressá-lo com coss + Tailwind + tokens. **Testes estáticos complementam, mas não substituem, a revisão dos estilos.**

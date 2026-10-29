@@ -1,13 +1,13 @@
-import test from 'node:test'
+import { onTestFinished, test } from 'vite-plus/test'
 import assert from 'node:assert/strict'
 import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { findHarnessDependencies } from './check-harness-independence.mjs'
 
-const fixture = (t) => {
+const fixture = () => {
   const dir = mkdtempSync(join(tmpdir(), 'harness-test-'))
-  t.after(() => rmSync(dir, { recursive: true, force: true }))
+  onTestFinished(() => rmSync(dir, { recursive: true, force: true }))
   mkdirSync(join(dir, 'scripts'))
   mkdirSync(join(dir, '.github/workflows'), { recursive: true })
   writeFileSync(
@@ -19,11 +19,11 @@ const fixture = (t) => {
   )
   return dir
 }
-test('aceita projeto sem execução de IA', (t) => {
-  assert.deepEqual(findHarnessDependencies(fixture(t)), [])
+test('aceita projeto sem execução de IA', () => {
+  assert.deepEqual(findHarnessDependencies(fixture()), [])
 })
-test('detecta pacote e executor legado', (t) => {
-  const root = fixture(t)
+test('detecta pacote e executor legado', () => {
+  const root = fixture()
   writeFileSync(
     join(root, 'package.json'),
     JSON.stringify({
@@ -37,8 +37,8 @@ test('detecta pacote e executor legado', (t) => {
   assert(failures.some((value) => value.includes('screen:generate')))
   assert(failures.some((value) => value.includes('generate-screen.mjs')))
 })
-test('detecta chave e instalação de agente em workflow', (t) => {
-  const root = fixture(t)
+test('detecta chave e instalação de agente em workflow', () => {
+  const root = fixture()
   writeFileSync(
     join(root, '.github/workflows/generate.yml'),
     'run: npm install --global @openai/codex\nOPENAI_API_KEY: variable',
