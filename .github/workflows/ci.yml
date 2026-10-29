@@ -27,6 +27,7 @@ jobs:
       - name: Verificações estáticas e testes do avaliador
         run: |
           npm run check:static
+          npm run check:harness
           npm run test:unit
       - name: Testes do projeto
         run: npm test
