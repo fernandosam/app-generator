@@ -1,0 +1,21 @@
+name: Release Drafter
+
+on:
+  push:
+    branches:
+      - main # Altere para master se seu repositório usar o nome antigo
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update_release_draft:
+    permissions:
+      contents: write  # Necessário para criar/atualizar rascunhos de release
+      pull-requests: write  # Necessário para ler metadados de PRs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

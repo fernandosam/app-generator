@@ -1,0 +1,26 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+categories:
+  - title: '🚀 Novas Funcionalidades (Features)'
+    labels:
+      - 'feature'
+      - 'enhancement'
+  - title: '🐛 Correções de Bugs (Fixes)'
+    labels:
+      - 'bug'
+  - title: '🧹 Refatoração e Performance'
+    labels:
+      - 'refactor'
+  - title: '🔧 Manutenção Geral (Chore)'
+    labels:
+      - 'chore'
+      - 'maintenance'
+  - title: '📝 Documentação e Testes'
+    labels:
+      - 'documentation'
+      - 'testing'
+change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
+template: |
+  ## O que mudou nesta versão:
+  
+  $CHANGES
