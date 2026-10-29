@@ -75,10 +75,10 @@ npm run layout:compare -- alternativas/A-report.json alternativas/B-report.json
 
 ## GitHub Actions
 
-| Workflow                                           | Gatilho              | Finalidade                                                    |
-| -------------------------------------------------- | -------------------- | ------------------------------------------------------------- |
-| [CI](.github/workflows/ci.yml)                     | push/PR main; manual | contratos, testes, build e `vp check`                         |
-| [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias     |
+| Workflow                                           | Gatilho              | Finalidade                                                |
+| -------------------------------------------------- | -------------------- | --------------------------------------------------------- |
+| [CI](.github/workflows/ci.yml)                     | push/PR main; manual | contratos, testes, build e `vp check`                     |
+| [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias |
 
 Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automaticamente. O harness externo pode criar o PR, que passa pelas mesmas verificações de qualquer contribuição.
 
