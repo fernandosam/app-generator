@@ -15,15 +15,22 @@ for (const screen of index.screens) {
   assert(!ids.has(screen.id), `Tela duplicada: ${screen.id}`)
   ids.add(screen.id)
   assert(screen.path.startsWith('/') && screen.purpose)
+  const routePath = screen.path === '/' ? 'src/routes/index.tsx' : `src/routes/${screen.path.slice(1)}.tsx`
+  assert(existsSync(routePath), `Rota inexistente: ${routePath}`)
+  const intent = load(`src/layout-intents/${screen.id}.json`)
+  assert(intent.screen === screen.id && intent.purpose && intent.primaryAction, `Intenção incompleta: ${screen.id}`)
   assert(['form', 'login', 'search', 'dashboard', 'content'].includes(screen.kind))
   assert(Array.isArray(screen.scenarios) && screen.scenarios.some(s => s.id === 'default'))
   const seen = new Set()
   for (const scenario of screen.scenarios) {
     assert(!seen.has(scenario.id) && scenario.id && scenario.state, `Cenário repetido/inválido: ${screen.id}/${scenario.id}`)
     seen.add(scenario.id)
-    assert(scenario.primaryActions === undefined || Number.isInteger(scenario.primaryActions))
+    assert(scenario.primaryActions === undefined || (Number.isInteger(scenario.primaryActions) && scenario.primaryActions >= 0))
+    if (scenario.expectCount) assert(scenario.expectCount.selector && Number.isInteger(scenario.expectCount.count) && scenario.expectCount.count >= 0)
+    if (scenario.expectText) assert(scenario.expectText.selector && typeof scenario.expectText.value === 'string')
+    if (scenario.expectFocused) assert(typeof scenario.expectFocused === 'string')
     for (const action of scenario.actions || []) {
-      assert(['fill', 'click', 'repeatText'].includes(action.type) && action.selector)
+      assert(['fill', 'click', 'repeatText', 'selectOption', 'focus', 'press'].includes(action.type) && action.selector)
     }
   }
   assert(existsSync(`src/layout-intents/${screen.id}.json`), `Intenção não localizada: ${screen.id}`)
@@ -36,6 +43,8 @@ for (const ref of refs.references) {
 }
 for (const file of [
   'vite.config.ts', 'src/routes/__root.tsx', 'src/routes/index.tsx',
+  'src/components/ui/button.tsx', 'src/components/ui/card.tsx', 'src/components/ui/input.tsx',
+  'src/components/ui/spinner.tsx', 'package-lock.json',
   'src/lib/layout/intent.ts', 'tests/layout.spec.ts',
   'scripts/audit-layout.mjs', 'scripts/verify-visual-review.mjs',
   'scripts/visual-review-contract.mjs', 'scripts/check-harness-independence.mjs',

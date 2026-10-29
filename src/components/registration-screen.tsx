@@ -13,7 +13,7 @@ type Submitted = { name: string; email: string }
 
 export function RegistrationScreen() {
   const [submitted, setSubmitted] = useState<Submitted | null>(null)
-  const formStyle = { '--form-max': plan.formMaxWidth } as CSSProperties
+  const formStyle = { '--form-max': '44rem' } as CSSProperties
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()

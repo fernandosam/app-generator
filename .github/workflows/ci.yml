@@ -19,11 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      # O lockfile será adicionado após a primeira instalação verificável.
-      - name: Instalar dependências
-        run: npm install --no-audit --no-fund
-      - name: Instalar componentes oficiais coss UI
-        run: npm run ui:install
+      - name: Instalar dependências travadas
+        run: npm ci --no-audit --no-fund
       - name: Verificações estáticas e testes do avaliador
         run: |
           npm run check:static

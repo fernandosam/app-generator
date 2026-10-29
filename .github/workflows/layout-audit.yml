@@ -19,10 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Instalar dependências e componentes
-        run: |
-          npm install --no-audit --no-fund
-          npm run ui:install
+      - name: Instalar dependências travadas
+        run: npm ci --no-audit --no-fund
       - name: Verificar independência de agentes
         run: npm run check:harness
       - name: Instalar Chromium do Playwright

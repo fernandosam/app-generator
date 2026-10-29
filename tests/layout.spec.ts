@@ -3,10 +3,11 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 const registry = JSON.parse(readFileSync(new URL('../src/layout-intents/screens.json', import.meta.url), 'utf8'))
 
-type Action = { type: 'fill' | 'click' | 'repeatText'; selector: string; value?: string; times?: number }
+type Action = { type: 'fill' | 'click' | 'repeatText' | 'selectOption' | 'focus' | 'press'; selector: string; value?: string; times?: number }
 type Scenario = {
   id: string; state: string; actions?: Action[]; minGroups?: number; primaryActions?: number
-  expectInvalid?: boolean; expectVisible?: string
+  expectInvalid?: boolean; expectVisible?: string; expectFocused?: string
+  expectCount?: { selector: string; count: number }; expectText?: { selector: string; value: string }
 }
 type Screen = { id: string; path: string; kind: 'form' | 'search' | 'dashboard' | 'login' | 'content'; purpose: string; scenarios: Scenario[] }
 const screens = registry.screens as unknown as Screen[]
@@ -21,6 +22,9 @@ for (const screen of screens) {
       for (const action of scenario.actions || []) {
         if (action.type === 'fill') await page.locator(action.selector).fill(action.value || '')
         if (action.type === 'click') await page.locator(action.selector).click()
+        if (action.type === 'selectOption') await page.locator(action.selector).selectOption(action.value || '')
+        if (action.type === 'focus') await page.locator(action.selector).focus()
+        if (action.type === 'press') await page.locator(action.selector).press(action.value || 'Tab')
         if (action.type === 'repeatText') {
           await page.locator(action.selector).evaluate((node, times) => {
             node.textContent = ((node.textContent || '') + ' ').repeat(times).trim()
@@ -28,6 +32,9 @@ for (const screen of screens) {
         }
       }
       if (scenario.expectVisible) await expect(page.locator(scenario.expectVisible)).toBeVisible()
+      if (scenario.expectFocused) await expect(page.locator(scenario.expectFocused)).toBeFocused()
+      if (scenario.expectCount) await expect(page.locator(scenario.expectCount.selector)).toHaveCount(scenario.expectCount.count)
+      if (scenario.expectText) await expect(page.locator(scenario.expectText.selector)).toContainText(scenario.expectText.value)
       if (scenario.expectInvalid) {
         expect(await page.locator('form :invalid').count(), 'O cenário de erro deve realmente ter campos inválidos').toBeGreaterThan(0)
       }

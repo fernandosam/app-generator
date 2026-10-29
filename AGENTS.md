@@ -2,6 +2,15 @@
 
 Este arquivo é a **fonte central de instruções operacionais** para qualquer harness externo (Pi, Claude Code, Codex ou outro). O app-generator **não executa modelos**, não gerencia autenticação de agentes e não depende de CLI, SDK ou API de IA. O harness controla suas próprias ferramentas, permissões e credenciais. Não adicionar um novo orquestrador de agentes ao projeto.
 
+## Princípio E06 — autonomia de composição (agent-first)
+
+- **O harness decide livremente** estrutura, hierarquia, componentes, regiões e layout em desktop/mobile. Não criar um catálogo semântico prescritivo nem adicionar enums de composição como pré-requisito.
+- A intenção de layout identifica **o problema a resolver**, não determina `split`, `dashboard`, largura, grid ou componentes. `src/lib/layout/intent.ts` recebe apenas campos leves da tarefa.
+- O coss UI é a fonte oficial de capacidades reais. Consultar `src/components/ui/` e, quando necessário, documentação oficial; não improvisar APIs.
+- **Validação precede novas restrições:** usar testes e screenshots antes de introduzir orientações adicionais. Uma falha pontual não justifica uma nova camada arquitetural.
+- As rotas `/login`, `/search`, `/dashboard` e `/` são exemplos locais de tarefas distintas; não implementam autenticação, serviços nem persistência.
+- Os componentes coss usados estão **versionados no repositório**. O `npm ci` instala suas dependências travadas. O comando `npm run ui:install` apenas informa a política de atualização; mudanças nas fontes oficiais devem ser revisadas e versionadas explicitamente.
+
 ## Arquitetura e limites
 
 - Aplicação TanStack Start (React, SSR e Vite), TypeScript, Tailwind CSS v4 e componentes oficiais **coss UI**.
@@ -19,14 +28,14 @@ Este arquivo é a **fonte central de instruções operacionais** para qualquer h
 
 1. Identificar ação principal, hierarquia, agrupamentos, densidade, estados (default, loading, empty, invalid, success quando pertinentes), dados longos e responsividade.
 2. Consultar `src/layout-references/registry.json` e código existente. Se houver ambiguidade de alto impacto, esclarecer ou documentar escolha conservadora.
-3. Criar/atualizar `src/layout-intents/<id>.json` conforme o schema `src/lib/layout/intent.ts`. Registrar `screen`, `purpose`, `primaryAction`, `groups`, `layout` e estados relevantes.
+3. Criar/atualizar `src/layout-intents/<id>.json` conforme `src/lib/layout/intent.ts`. Registrar `screen`, `purpose`, `primaryAction` e, quando úteis, público, estados e grupos. **Não registrar opções obrigatórias de layout ou componentes.**
 4. Não adicionar dependências, permissões nem ampliar contrato somente por conveniência.
 
 **Entrega:** intenção estruturada e plano de mudanças curto, sem autorizar APIs automaticamente.
 
 ### 2. Generator — compor a interface
 
-1. Consultar componentes e particles oficiais coss já instalados; preferir padrões existentes. Instalar componente do registro somente se necessário e justificado.
+1. Consultar componentes e particles oficiais coss já versionados; preferir padrões existentes. Se faltar um componente, incorporar a fonte oficial e suas dependências em uma mudança explícita, com revisão e atualização do lockfile. Nunca instalar componentes dinamicamente no CI.
 2. Implementar rota TanStack Start em `src/routes/`, preservando semântica, acessibilidade, estados e comportamento. Manter a tela de demonstração atual.
 3. Utilizar os marcadores `data-layout-root`, `data-layout-heading`, `data-layout-group`, `data-layout-field`, `data-layout-primary-action` e `data-layout-content` quando corresponderem à estrutura real.
 4. Cadastrar nova rota e cenários em `src/layout-intents/screens.json`. Categorias: `form`, `login`, `search`, `dashboard`, `content`. Ações reproduzíveis: `fill`, `click`, `repeatText`.
@@ -123,3 +132,11 @@ O validador rejeita auditoria incompleta, caminhos impróprios, hashes divergent
 - `ci.yml`: contratos, independência de harness, testes, build e TypeScript.
 - `layout-audit.yml`: Playwright, métricas, screenshots e artifacts por 14 dias.
 - **Nenhum workflow instala ou executa agente, usa credenciais de modelos ou cria código via IA.** O harness externo abre PRs; o CI valida os resultados.
+
+## Aprendizados da E06 e limites da validação
+
+- O conjunto de regressão inclui 19 cenários para cadastro, login, busca e dashboard, em três viewports. Confirme a cobertura real no relatório; o número muda quando telas/cenários forem adicionados.
+- Erros de composição que **não** aparecem nas métricas DOM (ritmo visual, equilíbrio, contraste contextual e qualidade de conteúdo) exigem inspeção multimodal/humana de capturas reais. Não declarar essa revisão sem abrir as imagens e produzir evidências apropriadas.
+- Fluxos de login, busca e dashboard desta demonstração são **simulados localmente** e não autorizam conectá-los a serviços, contas ou dados pessoais reais.
+- O CI só comprova testes automatizados; não atesta qualidade percebida. Registre falhas repetidas antes de acrescentar regras ao AGENTS.md.
+- Origem dos componentes coss UI versionados: [cosscom/ui](https://github.com/cosscom/ui/tree/main/apps/ui/registry/default/ui) (Button, Card, Input, Spinner, licença MIT). Atualizações requerem diff e reexecução completa do CI.

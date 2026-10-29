@@ -1,0 +1,18 @@
+{
+  "screen": "dashboard",
+  "purpose": "Consultar indicadores fictícios com filtros e atualização local",
+  "primaryAction": "Atualizar resumo",
+  "task": {
+    "userGoal": "Consultar indicadores fictícios com filtros e atualização local",
+    "audience": "Usuário explorando o exemplo de interface",
+    "successCriteria": [
+      "Interações locais funcionais",
+      "Responsividade e acessibilidade verificáveis"
+    ]
+  },
+  "states": [
+    "default",
+    "interactive",
+    "content-stress"
+  ]
+}

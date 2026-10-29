@@ -7,13 +7,12 @@
 Requisitos: Node.js 22+, npm, acesso ao registro coss UI e Chromium do Playwright para testes E2E.
 
 ```bash
-npm install
-npm run ui:install
+npm ci
 npx playwright install chromium
 npm run dev
 ```
 
-Acesse http://localhost:3000. Os componentes são instalados via registro oficial em `src/components/ui/` por `npm run ui:install`; não são substitutos próprios. Após instalação validada, versionar os componentes e o `package-lock.json` melhora a reprodutibilidade.
+Acesse http://localhost:3000. Os componentes **oficiais coss UI** usados no projeto (Button, Card, Input e Spinner) estão versionados em `src/components/ui/` e as dependências são travadas em `package-lock.json`. Atualizações de componentes e lockfile são feitas em PR próprio, com revisão do diff; não há download dinâmico da UI no CI.
 
 ## Geração de telas por um harness externo
 
@@ -22,6 +21,19 @@ Abra o projeto em seu harness preferido e solicite, por exemplo:
 > Siga AGENTS.md e crie uma tela de busca com filtros e resultados, usando TanStack Start e coss UI. Execute as verificações determinísticas e registre as evidências.
 
 O harness gerencia modelos, credenciais, contexto, alteração de código e abertura do PR. O app-generator disponibiliza instruções, contratos, bibliotecas e verificações, sem instalar ou executar outro agente.
+
+## Telas para avaliação agent-first
+
+O harness pode desenvolver layouts livremente — não há enum fechado para composições nem catálogo semântico de componentes. As quatro telas demonstrativas verificam tarefas diferentes:
+
+| Tela | Caminho | Interações locais |
+|---|---|---|
+| Cadastro | `/` | Validação e confirmação |
+| Login | `/login` | Validação de credenciais fictícias e confirmação sem autenticação |
+| Busca | `/search` | Filtro por texto/categoria e estado vazio |
+| Dashboard | `/dashboard` | Alternância de período, histórico e atualização simulada |
+
+Estas são **demonstrações**, sem backend, persistência ou autenticação real. O intuito é aferir resultados de composições livres por testes e evidências, não forçar um template.
 
 ## Auditoria e validação
 
@@ -35,7 +47,7 @@ npm run typecheck
 npm run layout:audit
 ```
 
-`src/layout-intents/screens.json` define telas, categorias e cenários reproduzíveis (incluindo estado de erro, sucesso e texto longo). O Playwright avalia 390px, 768px e 1440px, produzindo `artifacts/layout-report.json`, `artifacts/layout-report.md`, métricas e PNGs. A nota é **mecânica** e não certifica qualidade visual.
+`src/layout-intents/screens.json` define as quatro telas, categorias e cenários reproduzíveis (incluindo estado de erro, sucesso e texto longo). O Playwright avalia 390px, 768px e 1440px, produzindo `artifacts/layout-report.json`, `artifacts/layout-report.md`, métricas e PNGs. A nota é **mecânica** e não certifica qualidade visual.
 
 Caso o harness externo tenha inspecionado de fato as imagens, ele pode registrar `artifacts/layout-visual-review.json` com `runId`, lista completa das capturas e SHA-256 por PNG e então executar:
 
@@ -64,7 +76,7 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 
 - Starter funcional em código; sem banco, backend real de autenticação ou integrações reais de dados.
 - Auditoria perceptiva de imagens e avaliação de tarefas dependem de inspeção real externa; a ferramenta `layout:verify-visual` apenas valida o vínculo dos arquivos.
-- A instalação coss, os testes de navegador e o build devem ser confirmados pelas execuções reais no ambiente local ou GitHub Actions; não declarar resultados sem evidências.
+- Os resultados de navegador e build devem ser confirmados por execuções reais no ambiente local ou GitHub Actions; não declarar resultados sem evidências. Revisão perceptiva das capturas continua externa.
 - Para regras operacionais consulte [AGENTS.md](AGENTS.md); comandos resumidos em [docs/layout-workflow.md](docs/layout-workflow.md), diagnósticos em [docs/workflow-diagnostics.md](docs/workflow-diagnostics.md).
 
 Referências: [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).

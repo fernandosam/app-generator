@@ -14,4 +14,4 @@ O procedimento operacional para Planner, Generator, Evaluator, Refiner, revisão
 
 Os arquivos de `artifacts/` são gerados localmente, ignorados no Git e publicados como evidências pelos workflows de auditoria. Toda geração, inspeção multimodal e correção automática pertencem ao **harness externo**, não ao app-generator.
 
-O CI verifica código e contratos sem qualquer credencial de provedor de IA. Componentes coss UI ainda precisam ser instalados a partir do registro oficial até serem versionados.
+O CI verifica código e contratos sem qualquer credencial de provedor de IA. Componentes coss UI oficiais (Button, Card, Input e Spinner) estão versionados em `src/components/ui/`. Instale dependências com `npm ci`; atualização do upstream e do lockfile exige revisão explícita.
