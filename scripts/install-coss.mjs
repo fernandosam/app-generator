@@ -169,7 +169,7 @@ export async function installCoss({
   log(
     'Instalação concluída: bundle @coss/ui e ' +
       plan.particleCount +
-      ' partículas processados. Revise git diff, package-lock.json e execute npm run check / npm run build.',
+      ' partículas processados. Revise git diff, package-lock.json e execute npm run verify.',
   )
   return plan
 }
