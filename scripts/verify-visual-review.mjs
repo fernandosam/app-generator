@@ -5,7 +5,9 @@ try {
   const reportPath = 'artifacts/layout-report.json'
   const reviewPath = 'artifacts/layout-visual-review.json'
   if (!existsSync(reportPath) || !existsSync(reviewPath)) {
-    throw new Error('Execute layout:audit e produza artifacts/layout-visual-review.json com seu harness')
+    throw new Error(
+      'Execute layout:audit e produza artifacts/layout-visual-review.json com seu harness',
+    )
   }
   const report = JSON.parse(readFileSync(reportPath, 'utf8'))
   const review = JSON.parse(readFileSync(reviewPath, 'utf8'))

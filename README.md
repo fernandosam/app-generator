@@ -41,12 +41,12 @@ O harness gerencia modelos, credenciais, contexto, alteração de código e aber
 
 O harness pode desenvolver layouts livremente — não há enum fechado para composições nem catálogo semântico de componentes. As quatro telas demonstrativas verificam tarefas diferentes:
 
-| Tela | Caminho | Interações locais |
-|---|---|---|
-| Cadastro | `/` | Validação e confirmação |
-| Login | `/login` | Validação de credenciais fictícias e confirmação sem autenticação |
-| Busca | `/search` | Filtro por texto/categoria e estado vazio |
-| Dashboard | `/dashboard` | Alternância de período, histórico e atualização simulada |
+| Tela      | Caminho      | Interações locais                                                 |
+| --------- | ------------ | ----------------------------------------------------------------- |
+| Cadastro  | `/`          | Validação e confirmação                                           |
+| Login     | `/login`     | Validação de credenciais fictícias e confirmação sem autenticação |
+| Busca     | `/search`    | Filtro por texto/categoria e estado vazio                         |
+| Dashboard | `/dashboard` | Alternância de período, histórico e atualização simulada          |
 
 Estas são **demonstrações**, sem backend, persistência ou autenticação real. O intuito é aferir resultados de composições livres por testes e evidências, não forçar um template.
 
@@ -75,10 +75,10 @@ npm run layout:compare -- alternativas/A-report.json alternativas/B-report.json
 
 ## GitHub Actions
 
-| Workflow | Gatilho | Finalidade |
-|---|---|---|
-| [CI](.github/workflows/ci.yml) | push/PR main; manual | contratos, independência de harness, testes, build e vp check |
-| [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias |
+| Workflow                                           | Gatilho              | Finalidade                                                    |
+| -------------------------------------------------- | -------------------- | ------------------------------------------------------------- |
+| [CI](.github/workflows/ci.yml)                     | push/PR main; manual | contratos, independência de harness, testes, build e vp check |
+| [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias     |
 
 Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automaticamente. O harness externo pode criar o PR, que passa pelas mesmas verificações de qualquer contribuição.
 
@@ -92,6 +92,7 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 Referências: [Vite+](https://viteplus.dev/guide/) · [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
 
 <!-- workflows-reutilizaveis-2026 -->
+
 ## Comandos reutilizáveis para recriar funcionalidades
 
 Execute o Pi na raiz do projeto (após confiar nos recursos do projeto e usar `/reload` se a sessão já estiver aberta):

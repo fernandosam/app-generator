@@ -16,20 +16,8 @@
   "task": {
     "userGoal": "Informar dados pessoais e de acesso e receber confirmação de demonstração",
     "audience": "Pessoa criando uma conta",
-    "successCriteria": [
-      "Campos válidos",
-      "Mensagem de confirmação sem persistência"
-    ]
+    "successCriteria": ["Campos válidos", "Mensagem de confirmação sem persistência"]
   },
-  "states": [
-    "default",
-    "validation-error",
-    "success",
-    "content-stress"
-  ],
-  "dataVariations": [
-    "nomes longos",
-    "textos extensos",
-    "campos incompletos"
-  ]
+  "states": ["default", "validation-error", "success", "content-stress"],
+  "dataVariations": ["nomes longos", "textos extensos", "campos incompletos"]
 }

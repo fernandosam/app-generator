@@ -2,6 +2,7 @@
 description: Analisa uma funcionalidade de outro sistema (somente leitura), salvando mapa de telas e escopo mínimo.
 argument-hint: '<nome-da-funcionalidade> <caminho-da-origem>'
 ---
+
 Leia `.agents/skills/analisar-funcionalidade/SKILL.md` e siga integralmente seu procedimento, além de `AGENTS.md`.
 
 Funcionalidade: $1

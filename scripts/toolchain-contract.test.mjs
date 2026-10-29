@@ -14,7 +14,10 @@ test('usa apenas Vite+ para desenvolvimento, build e testes', () => {
   assert.match(pkg.scripts.check, /\bvp check\b/)
   assert.equal(pkg.devDependencies.vite, undefined)
   assert.equal(pkg.devDependencies.vitest, undefined)
-  assert.equal(pkg.overrides.vite, `npm:@voidzero-dev/vite-plus-core@${pkg.devDependencies['vite-plus']}`)
+  assert.equal(
+    pkg.overrides.vite,
+    `npm:@voidzero-dev/vite-plus-core@${pkg.devDependencies['vite-plus']}`,
+  )
   assert.match(pkg.overrides.vitest || '', /^5\.\d+\.\d+$/)
 })
 
@@ -27,7 +30,7 @@ test('mantém configuração única de app e testes', () => {
   assert.match(config, /fmt:\s*\{/)
   assert.doesNotMatch(readFileSync('tsconfig.json', 'utf8'), /"baseUrl"\s*:/)
   assert.equal(existsSync('vitest.config.ts'), false)
-  assert.match(readFileSync('src/lib/layout/intent.test.ts','utf8'), /from 'vite-plus\/test'/)
+  assert.match(readFileSync('src/lib/layout/intent.test.ts', 'utf8'), /from 'vite-plus\/test'/)
 })
 
 test('documentação não recomenda executor antigo', () => {

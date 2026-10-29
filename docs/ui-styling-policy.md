@@ -4,12 +4,12 @@ Esta orientação aplica-se a novas telas, componentes e correções no **app-ge
 
 ## Ordem de decisão
 
-| Prioridade | Preferir | Exemplo |
-|---|---|---|
-| 1 | Componente oficial coss UI com API/variantes verificadas no código instalado | `<Button variant="outline">Cancelar</Button>`, `<Input type="search" />`, `<Card />` |
-| 2 | Utilitários Tailwind v4 diretamente em `className` para **composição**, não para reimplementar controles | `grid gap-4 md:grid-cols-2`, `w-full sm:w-auto`, `p-6` |
-| 3 | Tokens do tema global disponíveis em `src/styles/app.css` | `bg-background`, `bg-card`, `text-foreground`, `border-border`, `text-primary` |
-| 4 | CSS específico, excepcional, mínimo, localizado e justificado | Efeito ou requisito demonstrável que as três opções anteriores não conseguem expressar |
+| Prioridade | Preferir                                                                                                 | Exemplo                                                                                |
+| ---------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 1          | Componente oficial coss UI com API/variantes verificadas no código instalado                             | `<Button variant="outline">Cancelar</Button>`, `<Input type="search" />`, `<Card />`   |
+| 2          | Utilitários Tailwind v4 diretamente em `className` para **composição**, não para reimplementar controles | `grid gap-4 md:grid-cols-2`, `w-full sm:w-auto`, `p-6`                                 |
+| 3          | Tokens do tema global disponíveis em `src/styles/app.css`                                                | `bg-background`, `bg-card`, `text-foreground`, `border-border`, `text-primary`         |
+| 4          | CSS específico, excepcional, mínimo, localizado e justificado                                            | Efeito ou requisito demonstrável que as três opções anteriores não conseguem expressar |
 
 A sequência não significa criar classes utilitárias próprias para substituir variantes nativas do coss. Antes de estilizar `Button`, `Input`, `Card` ou outros controles, **ler sua implementação em `src/components/ui/`** e manter seus estados de foco, disabled, loading e acessibilidade. Se o componente oficial necessário não estiver instalado, avaliar a incorporação da fonte oficial com revisão de dependências e lockfile, sem inventar uma versão caseira.
 

@@ -150,6 +150,7 @@ A escolha do **layout e dos componentes continua livre para o agente**, mas o mo
 - Origem dos componentes coss UI versionados: [cosscom/ui](https://github.com/cosscom/ui/tree/main/apps/ui/registry/default/ui) (inicialmente Button, Card, Input, Spinner, licença MIT). O instalador descobre as partículas pelo catálogo oficial, sem inventário fixo; executar somente de forma manual e rever diff, lockfile, imports, SSR e checks antes de adicionar os novos arquivos ao PR.
 
 <!-- workflows-reutilizaveis-2026 -->
+
 ## Workflows reutilizáveis de análise e implementação
 
 - Use `.agents/skills/analisar-funcionalidade/SKILL.md` para analisar funcionalidades externas. O **sistema de origem é sempre somente leitura**, protegido por permissões efetivas do harness; nenhuma implementação é autorizada nesta fase. Somente o relatório em `docs/analises/<slug>.md` pode ser criado no destino, inicialmente como `rascunho`.
