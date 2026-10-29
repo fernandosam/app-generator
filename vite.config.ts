@@ -15,7 +15,7 @@ export default defineConfig({
   fmt: {
     singleQuote: true,
     semi: false,
-    ignorePatterns: ['src/routeTree.gen.ts'],
+    ignorePatterns: ['.github/**', 'src/routeTree.gen.ts'],
   },
   test: { include: ['src/**/*.test.ts'], environment: 'node' },
 })
