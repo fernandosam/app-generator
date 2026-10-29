@@ -14,7 +14,7 @@ Este arquivo é a **fonte central de instruções operacionais** para qualquer h
 ## Arquitetura e limites
 
 - Aplicação TanStack Start (React, SSR e Vite+), TypeScript, Tailwind CSS v4 e componentes oficiais **coss UI**.
-- **Toolchain exclusiva:** `vite-plus` local com `vp dev`, `vp test` e `vp build` via scripts npm. Não adicionar executores alternativos nem caminhos de fallback. A resolução técnica interna `@voidzero-dev/vite-plus-core` é parte do Vite+, não uma segunda toolchain.
+- **Toolchain exclusiva:** `vite-plus` local com `vp dev`, `vp test`, `vp build` e `vp check` via scripts npm. Não adicionar executores alternativos nem caminhos de fallback. A resolução técnica interna `@voidzero-dev/vite-plus-core` é parte do Vite+, não uma segunda toolchain.
 - Usar rotas file-based em `src/routes/` e navegação interna com `<Link>` do `@tanstack/react-router`. Não introduzir Next.js.
 - O registro oficial está em `components.json`; componentes instalados ficam em `src/components/ui/`. Não inventar imports, props ou APIs não verificadas.
 - `src/layout-references/registry.json` contém exemplos, não templates obrigatórios; `src/layout-intents/` contém intenções e cenários executáveis.
@@ -49,12 +49,7 @@ Este arquivo é a **fonte central de instruções operacionais** para qualquer h
 Executar os comandos relevantes:
 
 ```bash
-npm run check:static
-npm run check:harness
-npm run test:unit
-npm test
-npm run build
-npm run typecheck
+npm run check
 npm run layout:audit
 ```
 
@@ -142,7 +137,7 @@ A escolha do **layout e dos componentes continua livre para o agente**, mas o mo
 
 ## GitHub Actions
 
-- `ci.yml`: contratos, independência de harness, testes, build e TypeScript.
+- `ci.yml`: `npm run check` executa contratos, independência de harness, testes, build e `vp check` (formatação, lint e tipos).
 - `layout-audit.yml`: Playwright, métricas, screenshots e artifacts por 14 dias.
 - **Nenhum workflow instala ou executa agente, usa credenciais de modelos ou cria código via IA.** O harness externo abre PRs; o CI valida os resultados.
 
