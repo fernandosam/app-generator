@@ -33,6 +33,8 @@ jobs:
         continue-on-error: true
       - name: Commit baseline without changing other workflows
         run: |
+          # Workflow templates/CI remain outside this one-off formatter baseline.
+          git restore -- .github/
           if ! git diff --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
