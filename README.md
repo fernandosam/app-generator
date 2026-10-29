@@ -12,20 +12,20 @@ npx playwright install chromium
 npm run dev
 ```
 
-Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. `npm run check` executa contratos próprios, testes Node, build, testes Vite+ e `vp check` (formatação Oxfmt, lint Oxlint e tipos). `npm run typecheck` executa somente a verificação de tipos integrada ao Vite+. **Todas as 55 primitivas oficiais** do bundle `@coss/ui` estão versionadas em `src/components/ui/` (com auxiliares como `segmented-control`, hooks e utilitários). `npm ci`, build e CI usam exclusivamente os arquivos locais e dependências travadas no `package-lock.json`, sem download do registry coss UI.
+Acesse http://localhost:3000. O Vite+ local executa desenvolvimento (`npm run dev`), build (`npm run build`) e testes (`npm test`). `npm run check` gera as rotas TanStack Start durante o build e executa `vp check` (formatação, lint e tipos); `npm run verify` acrescenta os contratos próprios e testes de regressão. O diagnóstico isolado `npm run typecheck` requer que as rotas já tenham sido geradas por `dev` ou `build`. **Todas as 55 primitivas oficiais** do bundle `@coss/ui` estão versionadas em `src/components/ui/`, incluindo auxiliares (por exemplo, `segmented-control`, hooks e utilitários). O `npm ci` usa apenas dependências travadas em `package-lock.json`; build e CI não acessam o registro coss.
 
-### Partículas oficiais — somente quando utilizadas
+### Partículas oficiais: instalar somente quando utilizadas
 
 ```bash
-npm run skills:install                           # opcional: inclui skill oficial coss UI
-npm run ui:install -- @coss/p-button-1            # instala apenas esta partícula
-npm run ui:install -- @coss/p-alert-dialog-2 --overwrite  # atualização explícita
+npm run skills:install                 # Opcional: skills coss UI e layout para agentes
+npm run ui:install -- @coss/p-button-1 # Instala a partícula selecionada
+npm run ui:install -- @coss/p-button-1 --overwrite # Atualização explícita
 npm run ui:install -- --help
 ```
 
-O script usa o CLI **shadcn 4.1.0** (somente sob demanda). Uma chamada sem partículas retorna erro sem modificar o projeto, e `--overwrite` nunca é implícito. A skill oficial `cosscom/ui` já está configurada em `scripts/install-skills.sh` para uso por agentes externos, sem executor de IA no runtime.
+O instalador usa o **CLI oficial shadcn 4.1.0**, sem sincronizador nem descoberta personalizada. Sem nomes explícitos de partículas ele não altera arquivos. A skill oficial `cosscom/ui` já está disponível no script `skills:install` para orientar agentes.
 
-Após adicionar uma partícula, revise `git diff`, imports, dependências, `package-lock.json` e compatibilidade com TanStack Start/SSR; execute `npm run check` e os testes relevantes antes de commitar. Partículas não utilizadas permanecem fora do código da aplicação. O snapshot das primitivas foi obtido do [coss UI oficial](https://github.com/cosscom/ui), revisão `890a79a5368b3cdebbdd860aa1908f2843fd7ddc` (licença MIT). Atualizações não são automáticas.
+Após instalar, revisar o diff, os imports, dependências, lockfile e compatibilidade TanStack Start/SSR; executar `npm run verify` e testes relevantes antes de versionar. O snapshot das primitivas foi obtido do [coss UI oficial](https://github.com/cosscom/ui) na revisão `890a79a5368b3cdebbdd860aa1908f2843fd7ddc` (licença MIT). A atualização das primitivas também deve ocorrer em PR específico.
 
 ## Estilização e componentes
 
@@ -55,7 +55,7 @@ Estas são **demonstrações**, sem backend, persistência ou autenticação rea
 ## Auditoria e validação
 
 ```bash
-npm run check
+npm run verify
 npm run layout:audit
 ```
 
@@ -77,10 +77,10 @@ npm run layout:compare -- alternativas/A-report.json alternativas/B-report.json
 
 ## GitHub Actions
 
-| Workflow                                           | Gatilho              | Finalidade                                                    |
-| -------------------------------------------------- | -------------------- | ------------------------------------------------------------- |
-| [CI](.github/workflows/ci.yml)                     | push/PR main; manual | contratos, independência de harness, testes, build e vp check |
-| [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias     |
+| Workflow                                           | Gatilho              | Finalidade                                                |
+| -------------------------------------------------- | -------------------- | --------------------------------------------------------- |
+| [CI](.github/workflows/ci.yml)                     | push/PR main; manual | contratos, testes, build e `vp check`                     |
+| [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias |
 
 Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automaticamente. O harness externo pode criar o PR, que passa pelas mesmas verificações de qualquer contribuição.
 
@@ -89,7 +89,7 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 - Starter funcional em código; sem banco, backend real de autenticação ou integrações reais de dados.
 - Auditoria perceptiva de imagens e avaliação de tarefas dependem de inspeção real externa; a ferramenta `layout:verify-visual` apenas valida o vínculo dos arquivos.
 - Os resultados de navegador e build devem ser confirmados por execuções reais no ambiente local ou GitHub Actions; não declarar resultados sem evidências. Revisão perceptiva das capturas continua externa.
-- Para regras operacionais consulte [AGENTS.md](AGENTS.md); comandos resumidos em [docs/layout-workflow.md](docs/layout-workflow.md), diagnósticos em [docs/workflow-diagnostics.md](docs/workflow-diagnostics.md).
+- Para regras operacionais consulte [AGENTS.md](AGENTS.md) e [docs/layout-workflow.md](docs/layout-workflow.md).
 
 Referências: [Vite+](https://viteplus.dev/guide/) · [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
 

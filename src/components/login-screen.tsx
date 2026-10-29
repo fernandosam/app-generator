@@ -12,7 +12,8 @@ export function LoginScreen() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const values = new FormData(event.currentTarget)
-    setSubmitted(String(values.get('email') ?? ''))
+    const email = values.get('email')
+    setSubmitted(typeof email === 'string' ? email : '')
   }
 
   return (
