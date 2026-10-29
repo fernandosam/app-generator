@@ -1,0 +1,32 @@
+name: Temporary coss source formatter
+on:
+  push:
+    branches: [feat/coss-primitives-on-demand-particles]
+permissions:
+  contents: write
+jobs:
+  format:
+    if: "!contains(github.event.head_commit.message, 'style(ui): format coss sources')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/coss-primitives-on-demand-particles
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.18.0'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Normalize sources with the existing Vite+ formatter
+        run: npx vp fmt . --write
+      - name: Commit normalized sources to the feature branch
+        run: |
+          git add scripts/ui-install.test.mjs src/components/ui src/hooks src/lib
+          if git diff --cached --quiet; then
+            echo "Nothing to format"
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "style(ui): format coss sources via Vite+ (#43)"
+          git push origin HEAD:feat/coss-primitives-on-demand-particles
