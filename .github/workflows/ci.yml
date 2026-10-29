@@ -22,5 +22,13 @@ jobs:
           cache: npm
       - name: Instalar dependências travadas
         run: npm ci --no-audit --no-fund
-      - name: Validar contratos, build, testes e vp check
+      - name: Validar contratos e segurança do harness
+        run: |
+          npm run check:static
+          npm run check:harness
+      - name: Testes Node e contratos da toolchain
+        run: npm run test:unit
+      - name: Gerar rotas e verificar Vite+ (build, formatação, lint, tipos)
         run: npm run check
+      - name: Testes Vite+
+        run: npm test
