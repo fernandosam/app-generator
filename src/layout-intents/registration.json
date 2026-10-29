@@ -2,7 +2,6 @@
   "screen": "registration",
   "purpose": "create_account",
   "density": "comfortable",
-  "priority": "form",
   "primaryAction": "create_account",
   "groups": [
     {
@@ -14,11 +13,6 @@
       "label": "Acesso à conta"
     }
   ],
-  "layout": {
-    "mobile": "single_column",
-    "desktop": "split",
-    "maxWidth": "lg"
-  },
   "task": {
     "userGoal": "Informar dados pessoais e de acesso e receber confirmação de demonstração",
     "audience": "Pessoa criando uma conta",

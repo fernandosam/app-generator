@@ -72,6 +72,266 @@
           "primaryActions": 1
         }
       ]
+    },
+    {
+      "id": "login",
+      "path": "/login",
+      "kind": "login",
+      "purpose": "Validar acesso fictício em formulário local",
+      "scenarios": [
+        {
+          "id": "default",
+          "state": "default",
+          "minGroups": 2,
+          "primaryActions": 1,
+          "expectCount": {
+            "selector": "#login-email",
+            "count": 1
+          }
+        },
+        {
+          "id": "invalid",
+          "state": "validation-error",
+          "actions": [
+            {
+              "type": "click",
+              "selector": "[data-layout-primary-action]"
+            }
+          ],
+          "expectInvalid": true,
+          "minGroups": 2,
+          "primaryActions": 1
+        },
+        {
+          "id": "success",
+          "state": "success",
+          "actions": [
+            {
+              "type": "fill",
+              "selector": "#login-email",
+              "value": "pessoa@example.com"
+            },
+            {
+              "type": "fill",
+              "selector": "#login-password",
+              "value": "senha-ficticia-123"
+            },
+            {
+              "type": "click",
+              "selector": "[data-layout-primary-action]"
+            }
+          ],
+          "expectVisible": "[data-testid=login-success]",
+          "primaryActions": 0,
+          "minGroups": 2
+        },
+        {
+          "id": "keyboard",
+          "state": "keyboard",
+          "actions": [
+            {
+              "type": "focus",
+              "selector": "#login-email"
+            },
+            {
+              "type": "press",
+              "selector": "#login-email",
+              "value": "Tab"
+            }
+          ],
+          "expectFocused": "#login-password",
+          "minGroups": 2,
+          "primaryActions": 1
+        },
+        {
+          "id": "long-content",
+          "state": "content-stress",
+          "actions": [
+            {
+              "type": "repeatText",
+              "selector": "[data-layout-content]",
+              "times": 5
+            }
+          ],
+          "minGroups": 2,
+          "primaryActions": 1
+        }
+      ]
+    },
+    {
+      "id": "search",
+      "path": "/search",
+      "kind": "search",
+      "purpose": "Pesquisar e filtrar catálogo de referências locais",
+      "scenarios": [
+        {
+          "id": "default",
+          "state": "default",
+          "minGroups": 2,
+          "primaryActions": 1,
+          "expectCount": {
+            "selector": "[data-testid=search-result]",
+            "count": 8
+          }
+        },
+        {
+          "id": "match",
+          "state": "filtered",
+          "actions": [
+            {
+              "type": "fill",
+              "selector": "#catalog-query",
+              "value": "formulários"
+            },
+            {
+              "type": "click",
+              "selector": "[data-layout-primary-action]"
+            }
+          ],
+          "expectCount": {
+            "selector": "[data-testid=search-result]",
+            "count": 1
+          },
+          "expectText": {
+            "selector": "[data-testid=search-count]",
+            "value": "1 resultado"
+          },
+          "minGroups": 2,
+          "primaryActions": 1
+        },
+        {
+          "id": "empty",
+          "state": "empty",
+          "actions": [
+            {
+              "type": "fill",
+              "selector": "#catalog-query",
+              "value": "consulta sem resultados xyz999"
+            },
+            {
+              "type": "click",
+              "selector": "[data-layout-primary-action]"
+            }
+          ],
+          "expectVisible": "[data-testid=search-empty]",
+          "expectCount": {
+            "selector": "[data-testid=search-result]",
+            "count": 0
+          },
+          "minGroups": 2,
+          "primaryActions": 1
+        },
+        {
+          "id": "category",
+          "state": "filtered",
+          "actions": [
+            {
+              "type": "selectOption",
+              "selector": "#catalog-category",
+              "value": "Design"
+            },
+            {
+              "type": "click",
+              "selector": "[data-layout-primary-action]"
+            }
+          ],
+          "expectCount": {
+            "selector": "[data-testid=search-result]",
+            "count": 3
+          },
+          "minGroups": 2,
+          "primaryActions": 1
+        },
+        {
+          "id": "long-content",
+          "state": "content-stress",
+          "actions": [
+            {
+              "type": "repeatText",
+              "selector": "[data-layout-content]",
+              "times": 6
+            }
+          ],
+          "minGroups": 2,
+          "primaryActions": 1
+        }
+      ]
+    },
+    {
+      "id": "dashboard",
+      "path": "/dashboard",
+      "kind": "dashboard",
+      "purpose": "Explorar métricas fictícias, filtros e histórico local",
+      "scenarios": [
+        {
+          "id": "default",
+          "state": "default",
+          "minGroups": 3,
+          "primaryActions": 1,
+          "expectCount": {
+            "selector": "[data-testid=dashboard-activity]",
+            "count": 4
+          }
+        },
+        {
+          "id": "month",
+          "state": "filtered",
+          "actions": [
+            {
+              "type": "click",
+              "selector": "button:has-text('30 dias')"
+            }
+          ],
+          "expectText": {
+            "selector": "[data-testid=period-label]",
+            "value": "Últimos 30 dias"
+          },
+          "minGroups": 3,
+          "primaryActions": 1
+        },
+        {
+          "id": "refreshed",
+          "state": "success",
+          "actions": [
+            {
+              "type": "click",
+              "selector": "[data-layout-primary-action]"
+            }
+          ],
+          "expectVisible": "[data-testid=dashboard-updated]",
+          "minGroups": 3,
+          "primaryActions": 1
+        },
+        {
+          "id": "completed",
+          "state": "filtered",
+          "actions": [
+            {
+              "type": "click",
+              "selector": "button:has-text('Somente concluídas')"
+            }
+          ],
+          "expectCount": {
+            "selector": "[data-testid=dashboard-activity]",
+            "count": 2
+          },
+          "minGroups": 3,
+          "primaryActions": 1
+        },
+        {
+          "id": "long-content",
+          "state": "content-stress",
+          "actions": [
+            {
+              "type": "repeatText",
+              "selector": "[data-layout-content]",
+              "times": 6
+            }
+          ],
+          "minGroups": 3,
+          "primaryActions": 1
+        }
+      ]
     }
   ]
 }

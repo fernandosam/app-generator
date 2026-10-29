@@ -1,0 +1,18 @@
+{
+  "screen": "search",
+  "purpose": "Buscar e filtrar referências fictícias em catálogo local",
+  "primaryAction": "Buscar",
+  "task": {
+    "userGoal": "Buscar e filtrar referências fictícias em catálogo local",
+    "audience": "Usuário explorando o exemplo de interface",
+    "successCriteria": [
+      "Interações locais funcionais",
+      "Responsividade e acessibilidade verificáveis"
+    ]
+  },
+  "states": [
+    "default",
+    "interactive",
+    "content-stress"
+  ]
+}

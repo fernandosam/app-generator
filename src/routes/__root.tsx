@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
 import '../styles/app.css'
+import '../styles/showcase.css'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -14,6 +16,12 @@ export const Route = createRootRoute({
 })
 
 function Root() {
+  useEffect(() => {
+    // SSR content can be visible before React event handlers are attached.
+    document.documentElement.dataset.appHydrated = 'true'
+    return () => { delete document.documentElement.dataset.appHydrated }
+  }, [])
+
   return (
     <html lang="pt-BR">
       <head><HeadContent /></head>
