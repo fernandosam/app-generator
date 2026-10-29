@@ -58,7 +58,9 @@ describe('contratos do conjunto coss sem fontes e fixtures paralelas', () => {
       const source = read(path)
       expect(source).toContain(upstream)
       expect(source).not.toMatch(/@\/registry\/default\//)
-      expect(source).not.toMatch(/Margaret Welsh|Los Angeles|flightCode|Create meeting|window\.alert\(/)
+      expect(source).not.toMatch(
+        /Margaret Welsh|Los Angeles|flightCode|Create meeting|window\.alert\(/,
+      )
     }
   })
 
