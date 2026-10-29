@@ -49,7 +49,7 @@ Este arquivo é a **fonte central de instruções operacionais** para qualquer h
 Executar os comandos relevantes:
 
 ```bash
-npm run check
+npm run verify
 npm run layout:audit
 ```
 
@@ -137,7 +137,7 @@ A escolha do **layout e dos componentes continua livre para o agente**, mas o mo
 
 ## GitHub Actions
 
-- `ci.yml`: `npm run check` executa contratos, independência de harness, testes, build e `vp check` (formatação, lint e tipos).
+- `ci.yml`: valida contratos, testes e `npm run check` (build para gerar as rotas, formatação, lint e tipos). `npm run verify` reproduz essas verificações localmente.
 - `layout-audit.yml`: Playwright, métricas, screenshots e artifacts por 14 dias.
 - **Nenhum workflow instala ou executa agente, usa credenciais de modelos ou cria código via IA.** O harness externo abre PRs; o CI valida os resultados.
 
