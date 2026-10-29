@@ -16,7 +16,7 @@ Acesse http://localhost:3000. Os componentes **oficiais coss UI** usados no proj
 
 ## Estilização e componentes
 
-Priorize **componentes oficiais coss UI e suas variantes**, depois **utilitários Tailwind CSS v4**, reutilizando os **tokens semânticos globais**. Não crie CSS paralelo para controles já existentes. CSS específico exige uma necessidade concreta não atendida, justificativa no PR e escopo mínimo. Consulte [Política de estilos](docs/ui-styling-policy.md) e as regras do `AGENTS.md`.
+Priorize **componentes oficiais coss UI e suas variantes**, depois **utilitários Tailwind CSS v4**, reutilizando os **tokens semânticos globais**. Não reimplemente a aparência ou os estados de controles já disponíveis. CSS específico exige uma necessidade concreta não atendida, justificativa no PR e escopo mínimo. Consulte [Política de estilos](docs/ui-styling-policy.md) e as regras do `AGENTS.md`.
 
 ## Geração de telas por um harness externo
 

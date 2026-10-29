@@ -25,14 +25,14 @@ test('skill de implementação reforça reutilização e justifica exceções de
   assert.match(skill, /AGENTS\.md/)
 })
 
-test('guia distingue uso recomendado de CSS legado e mantém layout livre', () => {
+test('guia valida a política de estilos vigente e mantém layout livre', () => {
   const guide = read('docs/ui-styling-policy.md')
   const readme = read('README.md')
   assert.match(guide, /Ordem de decisão/)
   assert.match(guide, /src\/components\/ui\//)
   assert.match(guide, /sem afetar controles globais/)
-  assert.match(guide, /Débito CSS legado resolvido/) 
-  assert(guide.includes('showcase.css'))
+  assert.match(guide, /Quando CSS adicional pode ser aceito/)
+  assert.match(guide, /Revisão de código/)
   assert.match(guide, /O agente continua livre para determinar a composição/)
   assert.match(guide, /não é linter CSS/)
   assert.match(readme, /Política de estilos/)

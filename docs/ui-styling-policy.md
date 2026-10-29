@@ -50,19 +50,9 @@ Uma exceção deve registrar no PR:
 
 Não introduzir novas cores hexadecimais ou variáveis locais para substituir tokens de tema; diferenças de tema compartilhadas exigem uma proposta explícita para os tokens globais. Um CSS de efeito visual pontual pode ser aceitável, mas nunca justifica recriar a base visual de um controle coss.
 
-## Débito CSS legado resolvido
-
-A refatoração das demonstrações de cadastro, login, busca e dashboard removeu as sobrescritas de `Button`, `Input` e `Card` e a folha paralela `src/styles/showcase.css`.
-
-- `src/styles/app.css` mantém somente `@import "tailwindcss"`, tokens globais de tema e o mapeamento `@theme inline`.
-- As rotas usam componentes coss oficiais, props/variantes reais e classes Tailwind locais para composição e responsividade; os controles preservam seus próprios estilos e estados.
-- A busca mantém um `<select>` nativo com classes utilitárias e tokens porque o componente coss Select ainda não está instalado; não foi recriado um controle via CSS. Caso essa necessidade cresça, priorizar a instalação oficial.
-- A alteração visual resultante não é prometida como pixel a pixel idêntica ao legado: o objetivo é consistência com o tema global. A auditoria verifica funcionalidade, layout e capturas; a avaliação estética necessita inspeção efetiva.
-- O teste `scripts/ui-legacy-css.test.mjs` bloqueia o retorno de seletores antigos, cores hex em TSX e folha CSS paralela, **mas não substitui revisão humana de novos estilos**.
-
 ## Validação
 
 - `npm run test:unit`: verifica presença e consistência das instruções (não é linter CSS).
 - `npm run check:static`, `npm run check:harness`, `npm test`, `npm run build`, `npm run typecheck`: mantêm as garantias técnicas.
 - `npm run layout:audit`: assegura métricas, estados e screenshots sem afirmar aprovação visual perceptiva.
-- Revisão de código: avaliar se CSS adicional foi justificado e se é possível expressá-lo com coss + Tailwind + tokens. **Nenhum teste textual impede sozinho novo CSS paralelo.**
+- Revisão de código: avaliar se CSS adicional foi justificado e se é possível expressá-lo com coss + Tailwind + tokens. **Testes estáticos complementam, mas não substituem, a revisão dos estilos.**
