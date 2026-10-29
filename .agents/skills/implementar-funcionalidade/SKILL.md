@@ -35,7 +35,7 @@ description: Recria no app-generator uma funcionalidade previamente analisada e 
 
 ## Validação e entrega
 
-1. Execute as verificações do `AGENTS.md`: `npm run check:static`, `npm run check:harness`, `npm run test:unit`, `npm test`, `npm run build`, `npm run typecheck`, `npm run layout:audit`.
+1. Execute as verificações do `AGENTS.md`: `npm run verify`, `npm run layout:audit`.
 2. Inspecione **efetivamente** screenshots relevantes antes de declarar revisão visual. Caso não seja possível, indique `inconclusivo` e não produza atestado de inspeção; para inspeção completa use o contrato `layout:verify-visual` descrito no AGENTS.md.
 3. Corrija falhas reproduzíveis no destino, reexecutando testes/auditoria; mantenha a limitação padrão de duas iterações do AGENTS.md.
 4. Abra PR referenciando todas as issues de implementação e a análise aprovada. Informe arquivos e símbolos preservados, rotas, decisões, dados fictícios, comandos **efetivamente executados**, resultados, screenshots inspecionadas e limitações.
