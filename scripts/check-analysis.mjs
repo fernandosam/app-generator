@@ -1,5 +1,5 @@
 import { lstatSync, readFileSync } from 'node:fs'
-import { join, resolve } from 'node:path'
+import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/

@@ -6,8 +6,9 @@ O procedimento operacional para Planner, Generator, Evaluator, Refiner, revisão
 
 A aplicação usa **Vite+** exclusivamente: `npm run dev` (`vp dev`), `npm test` (`vp test`), `npm run build` (`vp build`) e `vp check` (formatação, lint e tipos). A configuração de testes é compartilhada com o build.
 
-- `npm run check`: executa contratos de tela, independência de agentes, testes Node, build, testes Vite+ e `vp check` (formatação, lint e tipos).
-- `npm run typecheck`: executa somente a verificação de tipos nativa do Vite+ (`vp check --no-fmt --no-lint`).
+- `npm run check`: executa build (incluindo geração das rotas) e `vp check` para formatação, lint e tipos.
+- `npm run verify`: inclui contratos, independência de harness, testes Node, `check` e testes Vite+.
+- `npm run typecheck`: diagnóstico isolado de tipos, após executar `dev` ou `build` para gerar a árvore de rotas.
 - `npm run layout:audit`: Playwright em 390, 768 e 1440 px; cria relatório, métricas e screenshots.
 - `npm run layout:verify-visual`: valida o arquivo de inspeção produzido **fora** do projeto pelo harness escolhido. Não inspeciona imagens e não aprova UX.
 - `npm run layout:compare -- a.json b.json`: compara mecanicamente duas alternativas completas; não substitui revisão visual.

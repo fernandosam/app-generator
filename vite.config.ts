@@ -8,7 +8,6 @@ export default defineConfig({
   server: { port: 3000 },
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   plugins: [tanstackStart(), viteReact(), tailwindcss()],
-  // O lint type-aware utiliza o TypeScript Go; baseUrl foi removido do tsconfig.
   lint: {
     options: { typeAware: true, typeCheck: true },
   },
