@@ -26,9 +26,7 @@ jobs:
         run: |
           npm run check:static
           npm run check:harness
-      - name: Testes Node e contratos da toolchain
-        run: npm run test:unit
       - name: Gerar rotas e verificar Vite+ (build, formatação, lint, tipos)
         run: npm run check
-      - name: Testes Vite+
+      - name: Testes unitários (aplicação e scripts) via Vite+
         run: npm test
