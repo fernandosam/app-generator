@@ -18,9 +18,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '22.18.0'
       - name: Instalar dependências travadas
         run: npm ci --no-audit --no-fund
+      - name: Confirmar toolchain Vite+
+        run: npm exec -- vp --version
       - name: Verificar independência de agentes
         run: npm run check:harness
       - name: Instalar Chromium do Playwright

@@ -1,10 +1,10 @@
 # app-generator
 
-**Gerador de interfaces orientado a contexto e independente de harnesses**, usando TanStack Start, React, TypeScript, Tailwind CSS v4 e componentes oficiais coss UI. Qualquer harness externo (Pi, Codex, Claude Code ou outro) pode ler `AGENTS.md` e modificar o projeto usando suas próprias ferramentas — **não há executor de IA, API de modelos ou SDK de agentes integrado**.
+**Gerador de interfaces orientado a contexto e independente de harnesses**, usando TanStack Start, Vite+, React, TypeScript, Tailwind CSS v4 e componentes oficiais coss UI. Qualquer harness externo (Pi, Codex, Claude Code ou outro) pode ler `AGENTS.md` e modificar o projeto usando suas próprias ferramentas — **não há executor de IA, API de modelos ou SDK de agentes integrado**.
 
 ## Executar localmente
 
-Requisitos: Node.js 22+, npm, acesso ao registro coss UI e Chromium do Playwright para testes E2E.
+Requisitos: Node.js 22.18+ da linha 22, 24.11+ da linha 24 ou 26+, npm, acesso ao registro coss UI e Chromium do Playwright para testes E2E.
 
 ```bash
 npm ci
@@ -12,7 +12,7 @@ npx playwright install chromium
 npm run dev
 ```
 
-Acesse http://localhost:3000. Os componentes **oficiais coss UI** usados no projeto (Button, Card, Input e Spinner) estão versionados em `src/components/ui/` e as dependências são travadas em `package-lock.json`. Atualizações de componentes e lockfile são feitas em PR próprio, com revisão do diff; não há download dinâmico da UI no CI.
+Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. Os componentes **oficiais coss UI** usados no projeto (Button, Card, Input e Spinner) estão versionados em `src/components/ui/` e as dependências são travadas em `package-lock.json`. Atualizações de componentes e lockfile são feitas em PR próprio, com revisão do diff; não há download dinâmico da UI no CI.
 
 ## Estilização e componentes
 
@@ -83,7 +83,7 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 - Os resultados de navegador e build devem ser confirmados por execuções reais no ambiente local ou GitHub Actions; não declarar resultados sem evidências. Revisão perceptiva das capturas continua externa.
 - Para regras operacionais consulte [AGENTS.md](AGENTS.md); comandos resumidos em [docs/layout-workflow.md](docs/layout-workflow.md), diagnósticos em [docs/workflow-diagnostics.md](docs/workflow-diagnostics.md).
 
-Referências: [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
+Referências: [Vite+](https://viteplus.dev/guide/) · [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
 
 <!-- workflows-reutilizaveis-2026 -->
 ## Comandos reutilizáveis para recriar funcionalidades

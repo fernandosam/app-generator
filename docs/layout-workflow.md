@@ -4,6 +4,8 @@ O procedimento operacional para Planner, Generator, Evaluator, Refiner, revisão
 
 ## Operações determinísticas
 
+A aplicação usa **Vite+** exclusivamente: `npm run dev` (`vp dev`), `npm test` (`vp test`) e `npm run build` (`vp build`). A configuração de testes é compartilhada com o build.
+
 - `npm run check:static`: valida contratos de tela e estrutura do projeto.
 - `npm run check:harness`: impede reintrodução de SDKs, chaves e executores de IA no repositório.
 - `npm run test:unit`: verifica agregação, comparação e contratos de evidência.

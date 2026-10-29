@@ -13,7 +13,8 @@ Este arquivo é a **fonte central de instruções operacionais** para qualquer h
 
 ## Arquitetura e limites
 
-- Aplicação TanStack Start (React, SSR e Vite), TypeScript, Tailwind CSS v4 e componentes oficiais **coss UI**.
+- Aplicação TanStack Start (React, SSR e Vite+), TypeScript, Tailwind CSS v4 e componentes oficiais **coss UI**.
+- **Toolchain exclusiva:** `vite-plus` local com `vp dev`, `vp test` e `vp build` via scripts npm. Não adicionar executores alternativos nem caminhos de fallback. A resolução técnica interna `@voidzero-dev/vite-plus-core` é parte do Vite+, não uma segunda toolchain.
 - Usar rotas file-based em `src/routes/` e navegação interna com `<Link>` do `@tanstack/react-router`. Não introduzir Next.js.
 - O registro oficial está em `components.json`; componentes instalados ficam em `src/components/ui/`. Não inventar imports, props ou APIs não verificadas.
 - `src/layout-references/registry.json` contém exemplos, não templates obrigatórios; `src/layout-intents/` contém intenções e cenários executáveis.
