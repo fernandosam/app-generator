@@ -18,6 +18,8 @@ for (const screen of screens) {
     test(`${screen.id}/${scenario.id} — layout contextual, comportamento e captura`, async ({ page }, info) => {
       await page.goto(screen.path)
       await page.locator('[data-layout-root]').waitFor({ state: 'visible' })
+      // SSR markup is visible before React hydration. Interactions must wait for event handlers.
+      await page.waitForFunction(() => document.documentElement.dataset.appHydrated === 'true', null, { timeout: 20_000 })
       await page.evaluate(() => document.fonts.ready)
       for (const action of scenario.actions || []) {
         if (action.type === 'fill') await page.locator(action.selector).fill(action.value || '')

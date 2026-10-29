@@ -58,6 +58,7 @@ npm run layout:audit
 ```
 
 - `layout:audit` executa Playwright nos viewports **390, 768 e 1440 px** com cenários reais e de estresse.
+- Em rotas SSR, esperar o marcador de hidratação `html[data-app-hydrated="true"]` antes de testar cliques, formulários e filtros: HTML visível não garante que handlers do React já foram ligados.
 - As métricas e capturas ficam em `artifacts/metrics/` e `artifacts/screenshots/`; o resultado mecânico em `artifacts/layout-report.json` e `artifacts/layout-report.md`.
 - A auditoria invalida artefatos de rodadas anteriores e identifica cada rodada por `runId`. Relatório incompleto ou desatualizado não é aprovação.
 - Pontuação mecânica não certifica estética, usabilidade ou requisitos. Para crítica visual, o harness precisa **abrir as capturas de fato**. Se não conseguir, declarar inconclusivo, jamais inspeção realizada.
