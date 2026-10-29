@@ -9,7 +9,7 @@ Este arquivo é a **fonte central de instruções operacionais** para qualquer h
 - O coss UI é a fonte oficial de capacidades reais. Consultar `src/components/ui/` e, quando necessário, documentação oficial; não improvisar APIs.
 - **Validação precede novas restrições:** usar testes e screenshots antes de introduzir orientações adicionais. Uma falha pontual não justifica uma nova camada arquitetural.
 - As rotas `/login`, `/search`, `/dashboard` e `/` são exemplos locais de tarefas distintas; não implementam autenticação, serviços nem persistência.
-- Os componentes coss usados estão **versionados no repositório**. O `npm ci` instala suas dependências travadas. `npm run ui:install` agora instala, sob demanda, **todas as primitivas e partículas oficiais** descobertas no manifesto coss; use `npm run ui:install -- --dry-run` para pré-visualizar. O comando é mutável e **não deve rodar em CI/build**. Atualizações devem ser revisadas, testadas e versionadas explicitamente.
+- **Todas as primitivas oficiais coss UI** estão versionadas em `src/components/ui/`, incluindo auxiliares necessários. `npm ci` usa dependências travadas. Partículas são instaladas **seletivamente** usando `npm run ui:install -- @coss/p-<nome>-<numero>` quando necessário; sem argumentos o comando não altera nada. Build e CI não acessam o registry coss. A skill oficial já está em `npm run skills:install`.
 
 ## Arquitetura e limites
 
@@ -36,7 +36,7 @@ Este arquivo é a **fonte central de instruções operacionais** para qualquer h
 
 ### 2. Generator — compor a interface
 
-1. Consultar componentes e particles oficiais coss já versionados; preferir padrões existentes. Para ampliar a biblioteca, usar `npm run ui:install -- --dry-run` e depois `npm run ui:install` manualmente. O comando adiciona o bundle oficial `@coss/ui` e todas as partículas publicadas `p-*` em lotes, preservando arquivos existentes salvo `--overwrite` explícito. Inspecionar o diff, imports, dependências e lockfile; confirmar compatibilidade com TanStack Start/SSR antes de versionar. Nunca instalar componentes dinamicamente no CI.
+1. Consultar as primitivas oficiais em `src/components/ui/` e a skill oficial coss UI. Quando necessário, incorporar **somente a partícula escolhida** usando `npm run ui:install -- @coss/p-button-1` (ou item oficial verificado). Não baixar o catálogo inteiro. Inspecionar o diff, imports, dependências e lockfile; confirmar compatibilidade TanStack Start/SSR antes de versionar. Não executar instalação mutável no CI.
 2. Implementar rota TanStack Start em `src/routes/`, preservando semântica, acessibilidade, estados e comportamento. Manter a tela de demonstração atual.
 3. Utilizar os marcadores `data-layout-root`, `data-layout-heading`, `data-layout-group`, `data-layout-field`, `data-layout-primary-action` e `data-layout-content` quando corresponderem à estrutura real.
 4. Cadastrar nova rota e cenários em `src/layout-intents/screens.json`. Categorias: `form`, `login`, `search`, `dashboard`, `content`. Ações reproduzíveis: `fill`, `click`, `repeatText`.
@@ -147,7 +147,7 @@ A escolha do **layout e dos componentes continua livre para o agente**, mas o mo
 - Erros de composição que **não** aparecem nas métricas DOM (ritmo visual, equilíbrio, contraste contextual e qualidade de conteúdo) exigem inspeção multimodal/humana de capturas reais. Não declarar essa revisão sem abrir as imagens e produzir evidências apropriadas.
 - Fluxos de login, busca e dashboard desta demonstração são **simulados localmente** e não autorizam conectá-los a serviços, contas ou dados pessoais reais.
 - O CI só comprova testes automatizados; não atesta qualidade percebida. Registre falhas repetidas antes de acrescentar regras ao AGENTS.md.
-- Origem dos componentes coss UI versionados: [cosscom/ui](https://github.com/cosscom/ui/tree/main/apps/ui/registry/default/ui) (inicialmente Button, Card, Input, Spinner, licença MIT). O instalador descobre as partículas pelo catálogo oficial, sem inventário fixo; executar somente de forma manual e rever diff, lockfile, imports, SSR e checks antes de adicionar os novos arquivos ao PR.
+- Origem das 55 primitivas coss UI versionadas: [cosscom/ui](https://github.com/cosscom/ui/tree/890a79a5368b3cdebbdd860aa1908f2843fd7ddc/apps/ui/registry/default/ui), revisão `890a79a5368b3cdebbdd860aa1908f2843fd7ddc` (licença MIT). Auxiliares necessários incluídos; partículas apenas por demanda. Atualizações exigem revisão de diff e reexecução dos checks.
 
 <!-- workflows-reutilizaveis-2026 -->
 
