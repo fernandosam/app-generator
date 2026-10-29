@@ -113,6 +113,17 @@ O validador rejeita auditoria incompleta, caminhos impróprios, hashes divergent
 - Branches e PRs são criados pelo harness externo, nunca por workflows de geração do app-generator. Não publicar na `main` diretamente.
 - Os mesmos checks de CI e auditoria se aplicam a PRs de qualquer harness.
 
+## Política de estilos: coss UI → Tailwind → tokens globais
+
+A escolha do **layout e dos componentes continua livre para o agente**, mas o modo de estilizar deve respeitar esta prioridade:
+
+1. **Componente oficial coss UI já instalado:** verificar `src/components/ui/`, suas props, variantes e estados reais antes de criar controles. Preferir `Button`, `Input`, `Card` e outros componentes oficiais quando disponíveis. Não substituir componentes existentes por HTML/CSS que reimplemente sua aparência ou comportamento.
+2. **Utilitários Tailwind CSS v4:** usar `className` diretamente para composição, Grid/Flex, dimensões, espaçamentos, responsividade, tipografia e estados. Preferir variantes/props nativas do coss para controlar os próprios componentes (por exemplo, `Button variant="outline"`) antes de adicionar classes.
+3. **Tokens semânticos globais:** usar cores e raios do tema já disponíveis em `src/styles/app.css` (como `bg-background`, `text-foreground`, `border-border`, `bg-card`, `text-primary`) em vez de cores hexadecimais, medidas e paletas paralelas. Uma necessidade de tema compartilhada exige alteração explícita e justificada no sistema de tokens, não um novo conjunto de variáveis locais.
+4. **CSS específico é exceção:** somente quando uma necessidade concreta, observada e relevante **não puder ser resolvida** com componentes/variantes coss, utilitários Tailwind ou tokens disponíveis. Documentar no PR (a) o comportamento visual necessário, (b) a alternativa oficial/Tailwind examinada e por que não atende, (c) o menor seletor e arquivo local possível e (d) os testes/screenshots que demonstram o resultado. Evitar seletores globais, estilos para elementos genéricos (`button`, `input`), sobrescritas de `[data-slot]` de coss e novas folhas CSS por tela quando a composição puder ficar no JSX.
+
+**Revisão antes de concluir:** conferir se foram preservados foco, disabled, loading, estados de erro, teclado e responsividade dos componentes oficiais; executar os checks pertinentes do `AGENTS.md` e inspecionar capturas reais ao alegar revisão visual. Não acrescentar uma nova camada de aprovação ou contrato semântico de composição apenas para fazer valer esta preferência. Detalhes e exemplos: [docs/ui-styling-policy.md](docs/ui-styling-policy.md).
+
 ## Boas práticas de layout
 
 - Hierarquia por estrutura, tipografia e espaçamento. Espaços entre grupos podem partir de 1,5–2x os internos e ser ajustados aos tokens.
