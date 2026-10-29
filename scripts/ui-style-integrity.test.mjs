@@ -1,10 +1,10 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { existsSync, readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 
 const read = file => readFileSync(new URL('../' + file, import.meta.url), 'utf8')
 
-test('CSS global contém tokens do tema, não uma folha de estilos paralela', () => {
+test('tema global mantém somente tokens compartilhados e integração Tailwind', () => {
   const css = read('src/styles/app.css')
   assert.match(css, /^@import "tailwindcss";/)
   assert.match(css, /@theme inline/)
@@ -12,21 +12,22 @@ test('CSS global contém tokens do tema, não uma folha de estilos paralela', ()
     assert(css.includes(token), 'Token global ausente: ' + token)
   }
   const stripped = css.replace(/\/\*[\s\S]*?\*\//g, '')
-  assert.doesNotMatch(stripped, /(?:\.form-field|\.registration-card|\.primary-button|\.showcase-|\.site-header|\.story-panel|\.app-shell)/)
+  assert.doesNotMatch(stripped, /(?:^|\n)\s*[.#][\w-]+\s*(?:\{|:|\[)/m)
   assert.doesNotMatch(stripped, /(?:^|\s)(?:button|input|select)\s*[{,]/m)
   assert.doesNotMatch(stripped, /\[data-slot[^\]]*\]\s*[{,]/)
-  assert(!existsSync(new URL('../src/styles/showcase.css', import.meta.url)), 'Folha paralela showcase.css ainda existe')
-  assert(!read('src/routes/__root.tsx').includes('showcase.css'))
+  assert.deepEqual(readdirSync(new URL('../src/styles/', import.meta.url)), ['app.css'])
+  const root = read('src/routes/__root.tsx')
+  assert.deepEqual(root.match(/import ['\"][^'\"]+\.css['\"]/g), ["import '../styles/app.css'"])
 })
 
-test('telas utilizam coss UI e classes utilitárias sem classes paralelas', () => {
+test('telas reutilizam coss UI e classes utilitárias de composição', () => {
   for (const name of ['registration', 'login', 'search', 'dashboard']) {
     const code = read('src/components/' + name + '-screen.tsx')
     assert.match(code, /from ['"]@\/components\/ui\/button['"]/)
     assert.match(code, /from ['"]@\/components\/ui\/card['"]/)
     if (name !== 'dashboard') assert.match(code, /from ['"]@\/components\/ui\/input['"]/)
     assert.match(code, /className="[^"]*(?:grid|flex|gap-|p-|bg-)/)
-    assert.doesNotMatch(code, /className="[^"]*(?:showcase-|form-field|registration-card|primary-button)/)
+    assert.doesNotMatch(code, /import\s+['\"][^'\"]+\.css['\"]/)
     assert.match(code, /data-layout-/)
   }
 })
