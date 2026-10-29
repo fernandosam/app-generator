@@ -6,7 +6,7 @@ const read = (file) => readFileSync(new URL('../' + file, import.meta.url), 'utf
 
 test('tema global mantém somente tokens compartilhados e integração Tailwind', () => {
   const css = read('src/styles/app.css')
-  assert.match(css, /^@import "tailwindcss";/)
+  assert.match(css, /^@import [\'"]tailwindcss[\'"];/)
   assert.match(css, /@theme inline/)
   for (const token of [
     '--background',
