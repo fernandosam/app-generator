@@ -8,7 +8,6 @@ O primeiro passo com falha de um job de PR indica o diagnóstico inicial. Reprod
 
 ```sh
 npm ci --no-audit --no-fund
-npm run ui:install
 npm run check:static
 npm run check:harness
 npm run test:unit
@@ -19,4 +18,4 @@ npx playwright install --with-deps chromium
 npm run layout:audit
 ```
 
-A instalação dos componentes coss a partir do registro oficial é pré-requisito do build deste starter. Falhar explicitamente se npm ou o registro estiverem indisponíveis; não substituir componentes oficiais silenciosamente. Procedimentos de geração, inspeção e refinamento por harness externo: [AGENTS.md](../AGENTS.md).
+A instalação **do catálogo completo** coss não é pré-requisito para o build: os componentes utilizados já estão versionados e `npm ci` reproduz suas dependências. Execute `npm run ui:install -- --dry-run` e `npm run ui:install` somente durante uma atualização **manual e revisada**, nunca para corrigir jobs de CI ou gerar arquivos mutáveis no workflow. Falhas de acesso ao registry nesse comando devem permanecer explícitas; não substituir componentes oficiais silenciosamente. Procedimentos de geração, inspeção e refinamento por harness externo: [AGENTS.md](../AGENTS.md).
