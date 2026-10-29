@@ -22,6 +22,7 @@ const metrics = {
     { name: 'Interações locais', value: '14.920', change: '+11,3%', icon: Activity },
   ],
 }
+
 export function DashboardScreen() {
   const [period, setPeriod] = useState<'week' | 'month'>('week')
   const [onlyCompleted, setOnlyCompleted] = useState(false)
@@ -31,53 +32,82 @@ export function DashboardScreen() {
   return (
     <DemoShell screen="dashboard" eyebrow="03 / VISÃO GERAL" title="Seu espaço de trabalho"
       description="Indicadores ilustrativos, filtros acessíveis e atualizações locais, sem dados reais ou integração com um backend.">
-      <section className="showcase-dashboard-toolbar" data-layout-group="period" aria-labelledby="period-title">
-        <div><h2 id="period-title">Resumo de atividades</h2><p data-testid="period-label"><CalendarDays size={15} aria-hidden="true" /> {period === 'week' ? 'Últimos 7 dias' : 'Últimos 30 dias'}</p></div>
-        <div className="showcase-toolbar-actions">
-          <div className="showcase-period-controls" aria-label="Período dos indicadores">
-            <Button type="button" variant={period === 'week' ? 'default' : 'outline'} onClick={() => setPeriod('week')} aria-pressed={period === 'week'}>7 dias</Button>
-            <Button type="button" variant={period === 'month' ? 'default' : 'outline'} onClick={() => setPeriod('month')} aria-pressed={period === 'month'}>30 dias</Button>
+      <section className="flex flex-wrap items-center justify-between gap-5" data-layout-group="period" aria-labelledby="period-title">
+        <div>
+          <h2 id="period-title" className="text-lg font-semibold">Resumo de atividades</h2>
+          <p data-testid="period-label" className="mt-2 inline-flex items-center gap-2 text-sm text-muted-foreground">
+            <CalendarDays size={15} aria-hidden="true" /> {period === 'week' ? 'Últimos 7 dias' : 'Últimos 30 dias'}
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2" aria-label="Período dos indicadores">
+            <Button size="lg" type="button" variant={period === 'week' ? 'default' : 'outline'} onClick={() => setPeriod('week')} aria-pressed={period === 'week'}>7 dias</Button>
+            <Button size="lg" type="button" variant={period === 'month' ? 'default' : 'outline'} onClick={() => setPeriod('month')} aria-pressed={period === 'month'}>30 dias</Button>
           </div>
-          <Button type="button" variant="outline" data-layout-primary-action className="showcase-refresh" onClick={() => setRefreshed(true)}><RefreshCw size={16} aria-hidden="true" /> Atualizar resumo</Button>
+          <Button size="lg" type="button" variant="outline" data-layout-primary-action onClick={() => setRefreshed(true)}>
+            <RefreshCw size={16} aria-hidden="true" /> Atualizar resumo
+          </Button>
         </div>
       </section>
-      <section data-layout-group="metrics" aria-label="Indicadores de demonstração" className="showcase-metrics-grid">
+
+      <section data-layout-group="metrics" aria-label="Indicadores de demonstração" className="mt-7 grid min-w-0 gap-4 sm:grid-cols-3">
         {metrics[period].map(({ name, value, change, icon: Icon }) => (
-          <Card className="showcase-metric-card" key={name}>
-            <CardHeader><span className="showcase-metric-label">{name}</span><Icon size={18} aria-hidden="true" /></CardHeader>
-            <CardPanel>
-              <strong>{value}</strong>
-              <span className="showcase-metric-change"><TrendingUp size={14} aria-hidden="true" /> {change} no período</span>
+          <Card className="min-w-0" key={name}>
+            <CardHeader className="flex flex-row items-center justify-between gap-4">
+              <span className="text-sm font-medium text-muted-foreground">{name}</span>
+              <Icon size={18} className="shrink-0 text-muted-foreground" aria-hidden="true" />
+            </CardHeader>
+            <CardPanel className="flex flex-col gap-2">
+              <strong className="text-3xl font-semibold tracking-tight">{value}</strong>
+              <span className="inline-flex items-center gap-2 text-xs text-success"><TrendingUp size={14} aria-hidden="true" /> {change} no período</span>
             </CardPanel>
           </Card>
         ))}
       </section>
-      {refreshed && <p className="showcase-update-message" data-testid="dashboard-updated" role="status"><CheckCircle2 size={16} aria-hidden="true" /> Resumo atualizado localmente com dados de demonstração.</p>}
-      <section className="showcase-activity-grid" data-layout-group="activity" aria-labelledby="activity-title">
-        <Card className="showcase-activity-card">
+
+      {refreshed && (
+        <p className="mt-5 inline-flex items-center gap-2 text-sm text-success" data-testid="dashboard-updated" role="status">
+          <CheckCircle2 size={16} aria-hidden="true" /> Resumo atualizado localmente com dados de demonstração.
+        </p>
+      )}
+
+      <section className="mt-7 grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,0.9fr)]" data-layout-group="activity" aria-labelledby="activity-title">
+        <Card className="min-w-0">
           <CardHeader>
-            <div className="showcase-activity-header">
-              <div><span className="showcase-eyebrow">HISTÓRICO</span><CardTitle id="activity-title">Atividades recentes</CardTitle></div>
-              <Button type="button" variant="outline" aria-pressed={onlyCompleted} onClick={() => setOnlyCompleted(value => !value)}>{onlyCompleted ? 'Mostrar todas' : 'Somente concluídas'}</Button>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Histórico</span>
+                <CardTitle className="mt-2" id="activity-title">Atividades recentes</CardTitle>
+              </div>
+              <Button size="lg" type="button" variant="outline" aria-pressed={onlyCompleted} onClick={() => setOnlyCompleted(value => !value)}>
+                {onlyCompleted ? 'Mostrar todas' : 'Somente concluídas'}
+              </Button>
             </div>
           </CardHeader>
           <CardPanel>
-            <ul className="showcase-activity-list">
+            <ul className="m-0 list-none divide-y divide-border p-0">
               {shownActivity.map(item => (
-                <li key={item.id} data-testid="dashboard-activity">
-                  <span className="showcase-activity-icon"><ClipboardList size={17} aria-hidden="true" /></span>
-                  <div><strong>{item.label}</strong><p>{item.project}</p></div>
-                  <time>{item.time}</time>
+                <li key={item.id} data-testid="dashboard-activity" className="grid grid-cols-[2.25rem_minmax(0,1fr)_auto] items-center gap-3 py-4">
+                  <span className="grid size-9 place-items-center rounded-lg bg-muted text-muted-foreground">
+                    <ClipboardList size={17} aria-hidden="true" />
+                  </span>
+                  <div className="min-w-0">
+                    <strong className="block break-words text-sm font-medium">{item.label}</strong>
+                    <p className="mt-1 text-xs text-muted-foreground">{item.project}</p>
+                  </div>
+                  <time className="text-xs text-muted-foreground">{item.time}</time>
                 </li>
               ))}
             </ul>
           </CardPanel>
         </Card>
-        <aside className="showcase-tip-card">
-          <span className="showcase-eyebrow">SOBRE ESTE EXEMPLO</span>
-          <h2>Dados para explorar, não para armazenar.</h2>
-          <p>Este painel usa números fictícios para demonstrar estados, responsividade e hierarquia visual sem conectar serviços.</p>
-          <span className="showcase-tip-foot">Sem integração externa</span>
+        <aside className="flex min-w-0 flex-col justify-center rounded-2xl bg-primary p-8 text-primary-foreground">
+          <span className="text-xs font-semibold uppercase tracking-widest text-primary-foreground/70">Sobre este exemplo</span>
+          <h2 className="mt-4 text-2xl font-semibold tracking-tight">Dados para explorar, não para armazenar.</h2>
+          <p className="mt-4 break-words text-sm leading-7 text-primary-foreground/80">
+            Este painel usa números fictícios para demonstrar estados, responsividade e hierarquia visual sem conectar serviços.
+          </p>
+          <span className="mt-7 text-xs font-medium">Sem integração externa</span>
         </aside>
       </section>
     </DemoShell>

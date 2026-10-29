@@ -50,15 +50,15 @@ Uma exceção deve registrar no PR:
 
 Não introduzir novas cores hexadecimais ou variáveis locais para substituir tokens de tema; diferenças de tema compartilhadas exigem uma proposta explícita para os tokens globais. Um CSS de efeito visual pontual pode ser aceitável, mas nunca justifica recriar a base visual de um controle coss.
 
-## Situação do código preexistente
+## Débito CSS legado resolvido
 
-Há overrides anteriores à política em `src/styles/app.css` e `src/styles/showcase.css`, por exemplo:
+A refatoração das demonstrações de cadastro, login, busca e dashboard removeu as sobrescritas de `Button`, `Input` e `Card` e a folha paralela `src/styles/showcase.css`.
 
-- `.form-field input` e `.form-actions .primary-button` na tela de cadastro;
-- `.showcase-field [data-slot=input]` e `.showcase-field [data-slot=input-control]` na demonstração;
-- `.showcase-form-card [data-slot=card-header]` e `.showcase-result-card [data-slot=card-title]`.
-
-Eles **não são exemplos a replicar**. Sua remoção exige refatoração visual própria, com conversão para variantes/tokens/utilitários e auditoria comparativa, para não alterar as telas existentes incidentalmente. Esta entrega consolida a política para **novas alterações**, sem declarar que o legado já está normalizado.
+- `src/styles/app.css` mantém somente `@import "tailwindcss"`, tokens globais de tema e o mapeamento `@theme inline`.
+- As rotas usam componentes coss oficiais, props/variantes reais e classes Tailwind locais para composição e responsividade; os controles preservam seus próprios estilos e estados.
+- A busca mantém um `<select>` nativo com classes utilitárias e tokens porque o componente coss Select ainda não está instalado; não foi recriado um controle via CSS. Caso essa necessidade cresça, priorizar a instalação oficial.
+- A alteração visual resultante não é prometida como pixel a pixel idêntica ao legado: o objetivo é consistência com o tema global. A auditoria verifica funcionalidade, layout e capturas; a avaliação estética necessita inspeção efetiva.
+- O teste `scripts/ui-legacy-css.test.mjs` bloqueia o retorno de seletores antigos, cores hex em TSX e folha CSS paralela, **mas não substitui revisão humana de novos estilos**.
 
 ## Validação
 
