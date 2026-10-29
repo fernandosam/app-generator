@@ -2,10 +2,12 @@
 
 O repositório executa **dois workflows independentes de agentes**: CI e Layout Audit. Nenhum job de IA, credencial de modelo ou CLI de agente é necessário.
 
+O projeto executa **Vite+** (`vite-plus`) com `vp dev`, `vp test` e `vp build`, sem CLI alternativo. A instalação reprodutível usa o lockfile atualizado.
+
 O primeiro passo com falha de um job de PR indica o diagnóstico inicial. Reproduza o comando localmente; não transforme falhas reais em warnings.
 
 ```sh
-npm install --no-audit --no-fund
+npm ci --no-audit --no-fund
 npm run ui:install
 npm run check:static
 npm run check:harness
