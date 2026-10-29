@@ -64,7 +64,7 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 
 - Starter funcional em código; sem banco, backend real de autenticação ou integrações reais de dados.
 - Auditoria perceptiva de imagens e avaliação de tarefas dependem de inspeção real externa; a ferramenta `layout:verify-visual` apenas valida o vínculo dos arquivos.
-- Este ambiente não oferece acesso ao registro npm/coss ou execução remota de Actions; não se apresentam builds, testes de navegador ou workflows como executados sem comprovação.
+- A instalação coss, os testes de navegador e o build devem ser confirmados pelas execuções reais no ambiente local ou GitHub Actions; não declarar resultados sem evidências.
 - Para regras operacionais consulte [AGENTS.md](AGENTS.md); comandos resumidos em [docs/layout-workflow.md](docs/layout-workflow.md), diagnósticos em [docs/workflow-diagnostics.md](docs/workflow-diagnostics.md).
 
 Referências: [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
