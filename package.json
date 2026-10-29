@@ -21,7 +21,8 @@
     "test:unit": "node --test scripts/*.test.mjs",
     "check": "npm run check:static && npm run check:harness && npm run test:unit && npm test && npm run typecheck",
     "check:harness": "node scripts/check-harness-independence.mjs",
-    "layout:verify-visual": "node scripts/verify-visual-review.mjs"
+    "layout:verify-visual": "node scripts/verify-visual-review.mjs",
+    "analysis:check": "node scripts/check-analysis.mjs"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.0.0",

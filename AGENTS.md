@@ -141,3 +141,12 @@ O validador rejeita auditoria incompleta, caminhos impróprios, hashes divergent
 - Fluxos de login, busca e dashboard desta demonstração são **simulados localmente** e não autorizam conectá-los a serviços, contas ou dados pessoais reais.
 - O CI só comprova testes automatizados; não atesta qualidade percebida. Registre falhas repetidas antes de acrescentar regras ao AGENTS.md.
 - Origem dos componentes coss UI versionados: [cosscom/ui](https://github.com/cosscom/ui/tree/main/apps/ui/registry/default/ui) (Button, Card, Input, Spinner, licença MIT). Atualizações requerem diff e reexecução completa do CI.
+
+<!-- workflows-reutilizaveis-2026 -->
+## Workflows reutilizáveis de análise e implementação
+
+- Use `.agents/skills/analisar-funcionalidade/SKILL.md` para analisar funcionalidades externas. O **sistema de origem é sempre somente leitura**, protegido por permissões efetivas do harness; nenhuma implementação é autorizada nesta fase. Somente o relatório em `docs/analises/<slug>.md` pode ser criado no destino, inicialmente como `rascunho`.
+- Use `.agents/skills/implementar-funcionalidade/SKILL.md` **apenas após aprovação explícita do usuário** e validação do relatório com `npm run analysis:check -- <slug>`. Metadados de aprovação não substituem consentimento.
+- **Antes de qualquer mudança de código** na implementação, divida o trabalho em tarefas e crie **todas as issues correspondentes no GitHub, em ordem, usando os templates do repositório**. Se alguma issue não puder ser criada, interrompa.
+- Preserve demonstrações existentes (atualmente o cadastro em `/`); não presuma `/exemplo`. Uso padrão de dados sintéticos locais; integração externa depende de autorização específica.
+- Pi: atalhos `/analisar` e `/implementar` em `.pi/prompts/`. Outros harnesses: skills em `.agents/skills/`. Consulte [docs/workflow-funcionalidades.md](docs/workflow-funcionalidades.md) para argumentos e exemplos.
