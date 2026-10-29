@@ -2,6 +2,7 @@
 
 import {
   type ColumnDef,
+  type RowData,
   columnSizingFeature,
   columnVisibilityFeature,
   createPaginatedRowModel,
@@ -46,9 +47,9 @@ export const dataTableFeatures = tableFeatures({
   sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
 })
 
-export type DataTableColumn<TData> = ColumnDef<typeof dataTableFeatures, TData>
+export type DataTableColumn<TData extends RowData> = ColumnDef<typeof dataTableFeatures, TData>
 
-export interface DataTableProps<TData> {
+export interface DataTableProps<TData extends RowData> {
   data: TData[]
   columns: DataTableColumn<TData>[]
   pageSize?: number
@@ -60,7 +61,7 @@ export function normalizePageSize(value: number): number {
   return Number.isFinite(value) && Number.isInteger(value) && value > 0 ? value : 10
 }
 
-export function DataTable<TData>({
+export function DataTable<TData extends RowData>({
   data,
   columns,
   pageSize = 10,
