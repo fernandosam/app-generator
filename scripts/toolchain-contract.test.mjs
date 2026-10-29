@@ -48,8 +48,8 @@ test('mantém configuração única de app e testes', () => {
 test('workflows preservam contratos e auditoria sem duplicar verificações', () => {
   const ci = readFileSync('.github/workflows/ci.yml', 'utf8')
   const layout = readFileSync('.github/workflows/layout-audit.yml', 'utf8')
-  assert.match(ci, /run: npm run check:static/)
-  assert.match(ci, /run: npm run check:harness/)
+  assert.match(ci, /^\s*npm run check:static$/m)
+  assert.match(ci, /^\s*npm run check:harness$/m)
   assert.match(ci, /run: npm run test:unit/)
   assert.match(ci, /run: npm run check/)
   assert.match(ci, /run: npm test/)
