@@ -11,7 +11,7 @@ test('usa apenas Vite+ para desenvolvimento, build e testes', () => {
   assert.equal(pkg.scripts.build, 'vp build')
   assert.equal(pkg.scripts.test, 'vp test')
   assert.equal(pkg.scripts.typecheck, 'vp check --no-fmt --no-lint')
-  assert.equal(pkg.scripts.check, 'vp build && vp check')
+  assert.equal(pkg.scripts.check, 'vp build && vp check --deny-warnings')
   assert.deepEqual(pkg.scripts.verify.split(' && '), [
     'npm run check:static',
     'npm run check:harness',
