@@ -12,7 +12,7 @@ npx playwright install chromium
 npm run dev
 ```
 
-Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. O projeto traz inicialmente **Button, Card, Input e Spinner** versionados em `src/components/ui/`. Para adicionar **todas as primitivas e partículas oficiais** disponíveis no momento da execução, utilize o instalador manual abaixo. Ele consulta o manifesto do coss UI, instala o bundle `@coss/ui` e percorre todas as partículas `p-*` por lotes, usando o CLI shadcn e suas dependências.
+Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. `npm run check` executa contratos próprios, testes Node, build, testes Vite+ e `vp check` (formatação Oxfmt, lint Oxlint e tipos). `npm run typecheck` executa somente a verificação de tipos integrada ao Vite+. O projeto traz inicialmente **Button, Card, Input e Spinner** versionados em `src/components/ui/`. Para adicionar **todas as primitivas e partículas oficiais** disponíveis no momento da execução, utilize o instalador manual abaixo. Ele consulta o manifesto do coss UI, instala o bundle `@coss/ui` e percorre todas as partículas `p-*` por lotes, usando o CLI shadcn e suas dependências.
 
 ```bash
 npm run ui:install -- --dry-run      # lista itens/lotes sem instalar
@@ -53,12 +53,7 @@ Estas são **demonstrações**, sem backend, persistência ou autenticação rea
 ## Auditoria e validação
 
 ```bash
-npm run check:static
-npm run check:harness
-npm run test:unit
-npm test
-npm run build
-npm run typecheck
+npm run check
 npm run layout:audit
 ```
 
@@ -82,7 +77,7 @@ npm run layout:compare -- alternativas/A-report.json alternativas/B-report.json
 
 | Workflow | Gatilho | Finalidade |
 |---|---|---|
-| [CI](.github/workflows/ci.yml) | push/PR main; manual | contratos, independência de harness, testes, build e typecheck |
+| [CI](.github/workflows/ci.yml) | push/PR main; manual | contratos, independência de harness, testes, build e vp check |
 | [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias |
 
 Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automaticamente. O harness externo pode criar o PR, que passa pelas mesmas verificações de qualquer contribuição.
