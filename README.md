@@ -14,6 +14,10 @@ npm run dev
 
 Acesse http://localhost:3000. Os componentes **oficiais coss UI** usados no projeto (Button, Card, Input e Spinner) estão versionados em `src/components/ui/` e as dependências são travadas em `package-lock.json`. Atualizações de componentes e lockfile são feitas em PR próprio, com revisão do diff; não há download dinâmico da UI no CI.
 
+## Estilização e componentes
+
+Priorize **componentes oficiais coss UI e suas variantes**, depois **utilitários Tailwind CSS v4**, reutilizando os **tokens semânticos globais**. Não crie CSS paralelo para controles já existentes. CSS específico exige uma necessidade concreta não atendida, justificativa no PR e escopo mínimo. Consulte [Política de estilos](docs/ui-styling-policy.md) e as regras do `AGENTS.md`.
+
 ## Geração de telas por um harness externo
 
 Abra o projeto em seu harness preferido e solicite, por exemplo:
