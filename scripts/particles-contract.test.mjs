@@ -18,7 +18,10 @@ test('cinco partículas coss versionadas com origem e sem imports do registry', 
     const content = read(path)
     assert(content.includes(upstream), 'Origem oficial não rastreada: ' + name)
     assert.doesNotMatch(content, /@\/registry\/default\//)
-    assert.doesNotMatch(content, /Margaret Welsh|Los Angeles|flightCode|Create meeting|window\.alert\(/)
+    assert.doesNotMatch(
+      content,
+      /Margaret Welsh|Los Angeles|flightCode|Create meeting|window\.alert\(/,
+    )
   }
 })
 

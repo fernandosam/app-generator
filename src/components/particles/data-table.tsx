@@ -94,7 +94,9 @@ export function DataTable<TData>({
                 return (
                   <TableHead
                     key={header.id}
-                    aria-sort={sort === 'asc' ? 'ascending' : sort === 'desc' ? 'descending' : undefined}
+                    aria-sort={
+                      sort === 'asc' ? 'ascending' : sort === 'desc' ? 'descending' : undefined
+                    }
                   >
                     {header.isPlaceholder ? null : header.column.getCanSort() ? (
                       <button
@@ -103,7 +105,11 @@ export function DataTable<TData>({
                         onClick={header.column.getToggleSortingHandler()}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {sort === 'asc' ? <ChevronUpIcon aria-hidden="true" className="size-4 shrink-0" /> : sort === 'desc' ? <ChevronDownIcon aria-hidden="true" className="size-4 shrink-0" /> : null}
+                        {sort === 'asc' ? (
+                          <ChevronUpIcon aria-hidden="true" className="size-4 shrink-0" />
+                        ) : sort === 'desc' ? (
+                          <ChevronDownIcon aria-hidden="true" className="size-4 shrink-0" />
+                        ) : null}
                       </button>
                     ) : (
                       flexRender(header.column.columnDef.header, header.getContext())
@@ -117,7 +123,10 @@ export function DataTable<TData>({
         <TableBody>
           {table.getRowModel().rows.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+              <TableCell
+                colSpan={columns.length}
+                className="h-24 text-center text-muted-foreground"
+              >
                 {emptyMessage}
               </TableCell>
             </TableRow>
@@ -136,19 +145,35 @@ export function DataTable<TData>({
       </Table>
       <FrameFooter className="flex flex-wrap items-center justify-between gap-3 p-2">
         <p className="text-sm text-muted-foreground" aria-live="polite">
-          {table.getRowCount()} resultado(s) · Página {table.getPageCount() === 0 ? 0 : table.state.pagination.pageIndex + 1} de {table.getPageCount()}
+          {table.getRowCount()} resultado(s) · Página{' '}
+          {table.getPageCount() === 0 ? 0 : table.state.pagination.pageIndex + 1} de{' '}
+          {table.getPageCount()}
         </p>
         <Pagination className="w-auto justify-end">
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious render={
-                <Button size="sm" variant="outline" disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()} />
-              } />
+              <PaginationPrevious
+                render={
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={!table.getCanPreviousPage()}
+                    onClick={() => table.previousPage()}
+                  />
+                }
+              />
             </PaginationItem>
             <PaginationItem>
-              <PaginationNext render={
-                <Button size="sm" variant="outline" disabled={!table.getCanNextPage()} onClick={() => table.nextPage()} />
-              } />
+              <PaginationNext
+                render={
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={!table.getCanNextPage()}
+                    onClick={() => table.nextPage()}
+                  />
+                }
+              />
             </PaginationItem>
           </PaginationContent>
         </Pagination>

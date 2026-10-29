@@ -34,8 +34,16 @@ export function EmptyState({ title, description, icon, action, secondaryAction }
       {(action || secondaryAction) && (
         <EmptyContent>
           <div className="flex flex-wrap items-center justify-center gap-2">
-            {action && <Button size="sm" onClick={action.onClick}>{action.label}</Button>}
-            {secondaryAction && <Button size="sm" variant="outline" onClick={secondaryAction.onClick}>{secondaryAction.label}</Button>}
+            {action && (
+              <Button size="sm" onClick={action.onClick}>
+                {action.label}
+              </Button>
+            )}
+            {secondaryAction && (
+              <Button size="sm" variant="outline" onClick={secondaryAction.onClick}>
+                {secondaryAction.label}
+              </Button>
+            )}
           </div>
         </EmptyContent>
       )}

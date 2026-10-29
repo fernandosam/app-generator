@@ -59,7 +59,11 @@ export function ValidatedForm<T>({
   }
 
   return (
-    <Form className={className ?? 'flex w-full flex-col gap-4'} errors={errors} onSubmit={(event) => void handleSubmit(event)}>
+    <Form
+      className={className ?? 'flex w-full flex-col gap-4'}
+      errors={errors}
+      onSubmit={(event) => void handleSubmit(event)}
+    >
       {fields.map((field) => (
         <Field key={field.name} name={field.name}>
           <FieldLabel>{field.label}</FieldLabel>
@@ -73,8 +77,14 @@ export function ValidatedForm<T>({
           <FieldError />
         </Field>
       ))}
-      {submitError && <p role="alert" className="text-sm text-destructive-foreground">{submitError}</p>}
-      <Button type="submit" loading={pending} disabled={pending}>{submitLabel}</Button>
+      {submitError && (
+        <p role="alert" className="text-sm text-destructive-foreground">
+          {submitError}
+        </p>
+      )}
+      <Button type="submit" loading={pending} disabled={pending}>
+        {submitLabel}
+      </Button>
     </Form>
   )
 }

@@ -8,9 +8,12 @@ import { normalizePageSize } from './data-table'
 
 describe('composições oficiais coss com conteúdo parametrizável', () => {
   it('renderiza empty state sem dados fictícios nem botões obrigatórios', () => {
-    const html = renderToStaticMarkup(createElement(EmptyState, {
-      title: 'Sem registros', description: 'Defina um filtro para continuar',
-    }))
+    const html = renderToStaticMarkup(
+      createElement(EmptyState, {
+        title: 'Sem registros',
+        description: 'Defina um filtro para continuar',
+      }),
+    )
     expect(html).toContain('Sem registros')
     expect(html).toContain('Defina um filtro')
     expect(html).not.toContain('meeting')
@@ -18,12 +21,14 @@ describe('composições oficiais coss com conteúdo parametrizável', () => {
   })
 
   it('renderiza campos do formulário conforme contrato do chamador', () => {
-    const html = renderToStaticMarkup(createElement(ValidatedForm, {
-      fields: [{ name: 'email', label: 'Email', type: 'email' as const }],
-      schema: z.object({ email: z.email() }),
-      submitLabel: 'Confirmar',
-      onSubmit: async () => {},
-    }))
+    const html = renderToStaticMarkup(
+      createElement(ValidatedForm, {
+        fields: [{ name: 'email', label: 'Email', type: 'email' as const }],
+        schema: z.object({ email: z.email() }),
+        submitLabel: 'Confirmar',
+        onSubmit: async () => {},
+      }),
+    )
     expect(html).toContain('Email')
     expect(html).toContain('Confirmar')
     expect(html).not.toContain('Enter age')

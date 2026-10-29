@@ -58,7 +58,15 @@ export function EditDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={(next) => { if (!pending) { setOpen(next); if (!next) setError(null) } }}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (!pending) {
+          setOpen(next)
+          if (!next) setError(null)
+        }
+      }}
+    >
       <DialogTrigger render={<Button variant="outline" />}>{triggerLabel}</DialogTrigger>
       <DialogPopup className="sm:max-w-sm">
         <DialogHeader>
@@ -68,9 +76,17 @@ export function EditDialog({
         <Form className="contents" onSubmit={(event) => void handleSubmit(event)}>
           <DialogPanel className="grid gap-4">{children}</DialogPanel>
           <DialogFooter>
-            {error && <p role="alert" className="text-sm text-destructive-foreground">{error}</p>}
-            <DialogClose disabled={pending} render={<Button variant="ghost" />}>{cancelLabel}</DialogClose>
-            <Button type="submit" loading={pending} disabled={pending}>{submitLabel}</Button>
+            {error && (
+              <p role="alert" className="text-sm text-destructive-foreground">
+                {error}
+              </p>
+            )}
+            <DialogClose disabled={pending} render={<Button variant="ghost" />}>
+              {cancelLabel}
+            </DialogClose>
+            <Button type="submit" loading={pending} disabled={pending}>
+              {submitLabel}
+            </Button>
           </DialogFooter>
         </Form>
       </DialogPopup>
