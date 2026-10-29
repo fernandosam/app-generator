@@ -12,7 +12,7 @@ npx playwright install chromium
 npm run dev
 ```
 
-Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. `npm run check` executa contratos próprios, testes Node, build, testes Vite+ e `vp check` (formatação Oxfmt, lint Oxlint e tipos). `npm run typecheck` executa somente a verificação de tipos integrada ao Vite+. O projeto traz inicialmente **Button, Card, Input e Spinner** versionados em `src/components/ui/`. Para adicionar **todas as primitivas e partículas oficiais** disponíveis no momento da execução, utilize o instalador manual abaixo. Ele consulta o manifesto do coss UI, instala o bundle `@coss/ui` e percorre todas as partículas `p-*` por lotes, usando o CLI shadcn e suas dependências.
+Acesse http://localhost:3000. O Vite+ local executa desenvolvimento (`npm run dev`), build (`npm run build`) e testes (`npm test`). `npm run check` gera as rotas TanStack Start durante o build e executa `vp check` (formatação, lint e tipos); `npm run verify` acrescenta os contratos próprios e testes de regressão. O diagnóstico isolado `npm run typecheck` requer que as rotas já tenham sido geradas por `dev` ou `build`. O projeto traz inicialmente **Button, Card, Input e Spinner** versionados em `src/components/ui/`. Para adicionar **todas as primitivas e partículas oficiais** disponíveis no momento da execução, utilize o instalador manual abaixo. Ele consulta o manifesto do coss UI, instala o bundle `@coss/ui` e percorre todas as partículas `p-*` por lotes, usando o CLI shadcn e suas dependências.
 
 ```bash
 npm run ui:install -- --dry-run      # lista itens/lotes sem instalar
@@ -23,7 +23,7 @@ npm run ui:install -- --batch-size 10
 
 O comando exige conexão com o registry oficial e acesso ao npm. **É uma operação mutável manual**, nunca chamada durante `npm ci`, build ou CI. Os nomes e a quantidade são descobertos dinamicamente; `--dry-run` não gera um snapshot offline. Sem `--overwrite`, arquivos pré-existentes não são substituídos deliberadamente. Se um lote falhar, a execução é interrompida e poderá ser retomada após inspeção do estado do repositório e nova execução.
 
-**Após instalar**, revise `git status`, `git diff`, as dependências e `package-lock.json`; confirme imports/compatibilidade das partículas com TanStack Start e execute `npm run check`, `npm run build` e os testes relevantes. Só então versionar alterações em PR. A instalação do catálogo inteiro **não implica** que cada partícula foi validada para SSR ou que integra automaticamente as telas. Os componentes já versionados permanecem disponíveis sem rodar este comando, e não há download dinâmico da UI no CI.
+**Após instalar**, revise `git status`, `git diff`, as dependências e `package-lock.json`; confirme imports/compatibilidade das partículas com TanStack Start e execute `npm run verify` e a auditoria relevante. Só então versionar alterações em PR. A instalação do catálogo inteiro **não implica** que cada partícula foi validada para SSR ou que integra automaticamente as telas. Os componentes já versionados permanecem disponíveis sem rodar este comando, e não há download dinâmico da UI no CI.
 
 ## Estilização e componentes
 
@@ -53,7 +53,7 @@ Estas são **demonstrações**, sem backend, persistência ou autenticação rea
 ## Auditoria e validação
 
 ```bash
-npm run check
+npm run verify
 npm run layout:audit
 ```
 
@@ -77,7 +77,7 @@ npm run layout:compare -- alternativas/A-report.json alternativas/B-report.json
 
 | Workflow                                           | Gatilho              | Finalidade                                                    |
 | -------------------------------------------------- | -------------------- | ------------------------------------------------------------- |
-| [CI](.github/workflows/ci.yml)                     | push/PR main; manual | contratos, independência de harness, testes, build e vp check |
+| [CI](.github/workflows/ci.yml)                     | push/PR main; manual | contratos, testes, build e `vp check` |
 | [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias     |
 
 Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automaticamente. O harness externo pode criar o PR, que passa pelas mesmas verificações de qualquer contribuição.
@@ -87,7 +87,7 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 - Starter funcional em código; sem banco, backend real de autenticação ou integrações reais de dados.
 - Auditoria perceptiva de imagens e avaliação de tarefas dependem de inspeção real externa; a ferramenta `layout:verify-visual` apenas valida o vínculo dos arquivos.
 - Os resultados de navegador e build devem ser confirmados por execuções reais no ambiente local ou GitHub Actions; não declarar resultados sem evidências. Revisão perceptiva das capturas continua externa.
-- Para regras operacionais consulte [AGENTS.md](AGENTS.md); comandos resumidos em [docs/layout-workflow.md](docs/layout-workflow.md), diagnósticos em [docs/workflow-diagnostics.md](docs/workflow-diagnostics.md).
+- Para regras operacionais consulte [AGENTS.md](AGENTS.md) e [docs/layout-workflow.md](docs/layout-workflow.md).
 
 Referências: [Vite+](https://viteplus.dev/guide/) · [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
 
