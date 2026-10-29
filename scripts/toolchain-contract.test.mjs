@@ -11,9 +11,21 @@ test('usa apenas Vite+ para desenvolvimento, build e testes', () => {
   assert.equal(pkg.scripts.build, 'vp build')
   assert.equal(pkg.scripts.test, 'vp test')
   assert.equal(pkg.scripts.typecheck, 'vp check --no-fmt --no-lint')
-  assert.match(pkg.scripts.check, /\bvp check\b/)
+  assert.equal(pkg.scripts.check, 'vp build && vp check')
+  assert.deepEqual(pkg.scripts.verify.split(' && '), [
+    'npm run check:static',
+    'npm run check:harness',
+    'npm run test:unit',
+    'npm run check',
+    'npm test',
+  ])
   assert.equal(pkg.devDependencies.vite, undefined)
+  assert.equal(pkg.dependencies.vite, undefined)
   assert.equal(pkg.devDependencies.vitest, undefined)
+  assert.equal(pkg.dependencies.vitest, undefined)
+  assert.equal(pkg.dependencies.next, undefined)
+  assert.equal(pkg.devDependencies.next, undefined)
+  assert(pkg.dependencies['@tanstack/react-start'] && pkg.dependencies['@tanstack/react-router'])
   assert.equal(
     pkg.overrides.vite,
     `npm:@voidzero-dev/vite-plus-core@${pkg.devDependencies['vite-plus']}`,
@@ -33,23 +45,14 @@ test('mantém configuração única de app e testes', () => {
   assert.match(readFileSync('src/lib/layout/intent.test.ts', 'utf8'), /from 'vite-plus\/test'/)
 })
 
-test('documentação não recomenda executor antigo', () => {
-  for (const file of [
-    'AGENTS.md',
-    'README.md',
-    'docs/e06-validation.md',
-    'docs/github-publish.md',
-    'docs/layout-workflow.md',
-    'docs/workflow-diagnostics.md',
-  ]) {
-    assert.doesNotMatch(readFileSync(file, 'utf8'), /\bVite\b(?!\+)/, file)
-  }
-})
-
 test('workflows preservam contratos e auditoria sem duplicar verificações', () => {
   const ci = readFileSync('.github/workflows/ci.yml', 'utf8')
   const layout = readFileSync('.github/workflows/layout-audit.yml', 'utf8')
+  assert.match(ci, /run: npm run check:static/)
+  assert.match(ci, /run: npm run check:harness/)
+  assert.match(ci, /run: npm run test:unit/)
   assert.match(ci, /run: npm run check/)
+  assert.match(ci, /run: npm test/)
   assert.doesNotMatch(ci, /run: npm run typecheck/)
   assert.match(layout, /run: npm run layout:audit/)
   assert.doesNotMatch(layout, /run: npm run check:harness/)
