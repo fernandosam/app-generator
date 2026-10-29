@@ -17,7 +17,7 @@ export function RegistrationScreen() {
     event.preventDefault()
     const values = new FormData(event.currentTarget)
     setSubmitted({
-      name: \`${values.get("firstName") ?? ""} ${values.get("lastName") ?? ""}\`.trim(),
+      name: [values.get('firstName'), values.get('lastName')].map(value => String(value ?? '')).join(' ').trim(),
       email: String(values.get('email') ?? ''),
     })
   }
