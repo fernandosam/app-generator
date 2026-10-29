@@ -12,7 +12,18 @@ npx playwright install chromium
 npm run dev
 ```
 
-Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. Os componentes **oficiais coss UI** usados no projeto (Button, Card, Input e Spinner) estão versionados em `src/components/ui/` e as dependências são travadas em `package-lock.json`. Atualizações de componentes e lockfile são feitas em PR próprio, com revisão do diff; não há download dinâmico da UI no CI.
+Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. O projeto traz inicialmente **Button, Card, Input e Spinner** versionados em `src/components/ui/`. Para adicionar **todas as primitivas e partículas oficiais** disponíveis no momento da execução, utilize o instalador manual abaixo. Ele consulta o manifesto do coss UI, instala o bundle `@coss/ui` e percorre todas as partículas `p-*` por lotes, usando o CLI shadcn e suas dependências.
+
+```bash
+npm run ui:install -- --dry-run      # lista itens/lotes sem instalar
+npm run ui:install                  # instala todos, preservando arquivos existentes
+npm run ui:install -- --overwrite   # opcional: autoriza atualizar arquivos existentes
+npm run ui:install -- --batch-size 10
+```
+
+O comando exige conexão com o registry oficial e acesso ao npm. **É uma operação mutável manual**, nunca chamada durante `npm ci`, build ou CI. Os nomes e a quantidade são descobertos dinamicamente; `--dry-run` não gera um snapshot offline. Sem `--overwrite`, arquivos pré-existentes não são substituídos deliberadamente. Se um lote falhar, a execução é interrompida e poderá ser retomada após inspeção do estado do repositório e nova execução.
+
+**Após instalar**, revise `git status`, `git diff`, as dependências e `package-lock.json`; confirme imports/compatibilidade das partículas com TanStack Start e execute `npm run check`, `npm run build` e os testes relevantes. Só então versionar alterações em PR. A instalação do catálogo inteiro **não implica** que cada partícula foi validada para SSR ou que integra automaticamente as telas. Os componentes já versionados permanecem disponíveis sem rodar este comando, e não há download dinâmico da UI no CI.
 
 ## Estilização e componentes
 

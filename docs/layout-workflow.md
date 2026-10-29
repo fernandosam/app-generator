@@ -16,4 +16,4 @@ A aplicação usa **Vite+** exclusivamente: `npm run dev` (`vp dev`), `npm test`
 
 Os arquivos de `artifacts/` são gerados localmente, ignorados no Git e publicados como evidências pelos workflows de auditoria. Toda geração, inspeção multimodal e correção automática pertencem ao **harness externo**, não ao app-generator.
 
-O CI verifica código e contratos sem qualquer credencial de provedor de IA. Componentes coss UI oficiais (Button, Card, Input e Spinner) estão versionados em `src/components/ui/`. Instale dependências com `npm ci`; atualização do upstream e do lockfile exige revisão explícita.
+O CI verifica código e contratos sem qualquer credencial de provedor de IA. Os componentes coss UI usados nas telas (inicialmente Button, Card, Input e Spinner) estão versionados em `src/components/ui/`. Instale dependências com `npm ci`. Para ampliar manualmente a biblioteca para todas as primitivas e partículas oficiais, consulte `npm run ui:install -- --dry-run` e execute `npm run ui:install` após revisar o plano; atualização do upstream, imports e lockfile exige revisão explícita e testes. Essa instalação não pertence ao CI.
