@@ -5,6 +5,9 @@ on:
   push:
     branches: [refactor/viteplus-unified-check-37-39]
     paths: ['.github/workflows/one-off-oxfmt.yml']
+  pull_request:
+    branches: [main]
+    paths: ['.github/workflows/one-off-oxfmt.yml']
 permissions:
   contents: write
 concurrency:
@@ -12,12 +15,14 @@ concurrency:
   cancel-in-progress: false
 jobs:
   format:
+    if: github.event_name == 'push' || (github.event.pull_request.number == 40 && github.event.pull_request.head.repo.full_name == 'fernandosam/app-generator')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
+          ref: refactor/viteplus-unified-check-37-39
       - uses: actions/setup-node@v4
         with:
           node-version: '22.18.0'
