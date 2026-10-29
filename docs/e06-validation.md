@@ -3,7 +3,7 @@
 ## Execução verificável
 
 - PR: [#13](https://github.com/fernandosam/app-generator/pull/13), issues #8–#12.
-- Workflow CI: [40918418186](https://github.com/fernandosam/app-generator/actions/runs/40918418186) — concluído com sucesso (dependências travadas, testes unitários, Vitest, build e TypeScript).
+- Workflow CI: [40918418186](https://github.com/fernandosam/app-generator/actions/runs/40918418186) — concluído com sucesso (dependências travadas, testes unitários, testes da aplicação, build e TypeScript).
 - Workflow Layout Audit: [40918418404](https://github.com/fernandosam/app-generator/actions/runs/40918418404) — concluído com sucesso após a correção da sincronização de hidratação SSR.
 - Artefato: `layout-evidence-40918418404` (retido por 14 dias), `runId=1793293730633-2828`.
 - Relatório: **57/57 combinações executadas**, 4 telas, 19 cenários, 3 viewports, **100/100 pontos mecânicos**, 0 críticos, 0 graves, 0 ausentes e 0 obsoletos.

@@ -4,7 +4,7 @@
 
 ## Executar localmente
 
-Requisitos: Node.js 22.18+ (ou 24.11+ / 26+), npm, acesso ao registro coss UI e Chromium do Playwright para testes E2E.
+Requisitos: Node.js 22.18+ da linha 22, 24.11+ da linha 24 ou 26+, npm, acesso ao registro coss UI e Chromium do Playwright para testes E2E.
 
 ```bash
 npm ci
@@ -83,7 +83,7 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 - Os resultados de navegador e build devem ser confirmados por execuções reais no ambiente local ou GitHub Actions; não declarar resultados sem evidências. Revisão perceptiva das capturas continua externa.
 - Para regras operacionais consulte [AGENTS.md](AGENTS.md); comandos resumidos em [docs/layout-workflow.md](docs/layout-workflow.md), diagnósticos em [docs/workflow-diagnostics.md](docs/workflow-diagnostics.md).
 
-Referências: [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
+Referências: [Vite+](https://viteplus.dev/guide/) · [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
 
 <!-- workflows-reutilizaveis-2026 -->
 ## Comandos reutilizáveis para recriar funcionalidades

@@ -23,3 +23,16 @@ test('mantém configuração única de app e testes', () => {
   assert.equal(existsSync('vitest.config.ts'), false)
   assert.match(readFileSync('src/lib/layout/intent.test.ts','utf8'), /from 'vite-plus\/test'/)
 })
+
+test('documentação não recomenda executor antigo', () => {
+  for (const file of [
+    'AGENTS.md',
+    'README.md',
+    'docs/e06-validation.md',
+    'docs/github-publish.md',
+    'docs/layout-workflow.md',
+    'docs/workflow-diagnostics.md',
+  ]) {
+    assert.doesNotMatch(readFileSync(file, 'utf8'), /\bVite\b(?!\+)/, file)
+  }
+})
