@@ -17,6 +17,7 @@ Este arquivo é a **fonte central de instruções operacionais** para qualquer h
 - **Toolchain exclusiva:** `vite-plus` local com `vp dev`, `vp test`, `vp build` e `vp check` via scripts npm. Não adicionar executores alternativos nem caminhos de fallback. A resolução técnica interna `@voidzero-dev/vite-plus-core` é parte do Vite+, não uma segunda toolchain.
 - Usar rotas file-based em `src/routes/` e navegação interna com `<Link>` do `@tanstack/react-router`. Não introduzir Next.js.
 - O registro oficial está em `components.json`; componentes instalados ficam em `src/components/ui/`. Não inventar imports, props ou APIs não verificadas.
+- Reutilizar as cinco composições oficiais derivadas em `src/components/particles/` quando a tarefa pedir formulário validado, diálogo de edição, estado vazio, tabela com ordenação/paginação ou toast. Ver [docs/coss-particles.md](docs/coss-particles.md). Props, handlers e dados são fornecidos pelo chamador; não confundir exemplos de registry com dados de produção.
 - `src/layout-references/registry.json` contém exemplos, não templates obrigatórios; `src/layout-intents/` contém intenções e cenários executáveis.
 - Skills opcionais de UI e design podem orientar o harness, mas não são dependências do app-generator.
 - Comandos npm, testes, Playwright, auditorias e validação de evidências **não chamam modelos de IA**.
