@@ -1,0 +1,33 @@
+name: Temporary coss particle setup
+on:
+  push:
+    branches: [feat/coss-five-particles]
+permissions:
+  contents: write
+jobs:
+  setup:
+    if: "!contains(github.event.head_commit.message, 'chore(ui): lock table dependency and format sources')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/coss-five-particles
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.18.0'
+          cache: npm
+      - name: Lock official TanStack Table v9 dependency
+        run: npm install --save-exact @tanstack/react-table@9.2.4 --no-audit --no-fund
+      - name: Apply repository Vite+ formatting
+        run: npx vp fmt . --write
+      - name: Commit dependency lock and normalized compositions
+        run: |
+          git add package.json package-lock.json src/components/particles scripts/particles-contract.test.mjs README.md AGENTS.md docs/coss-particles.md
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "chore(ui): lock table dependency and format sources (#55 #56)"
+          git push origin HEAD:feat/coss-five-particles
