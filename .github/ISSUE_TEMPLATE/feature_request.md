@@ -1,20 +1,21 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
+title: "[feat] [Escopo]: "
 labels: ''
 assignees: ''
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+### 💡 Contexto da Funcionalidade
+O seu problema está relacionado a alguma frustração ou necessidade? Por favor, descreva de forma clara. 
+*(Ex: "Como usuário, eu gostaria de poder...")*
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+### 🛠️ Solução Proposta
+Uma descrição clara e concisa do que você quer que aconteça ou de como imagina essa funcionalidade.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+### 📐 Alternativas Consideradas
+Uma descrição de quaisquer soluções ou recursos alternativos que você considerou.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+### 📌 Informações Adicionais
+Adicione qualquer outro contexto, esboços ou capturas de tela sobre a solicitação de recurso aqui.
