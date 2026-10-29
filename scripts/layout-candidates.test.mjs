@@ -1,4 +1,4 @@
-import test from 'node:test'
+import { test } from 'vite-plus/test'
 import assert from 'node:assert/strict'
 import { chooseCandidate } from './layout-candidates.mjs'
 const report = (label, criticalCount, majorCount, score, complete = true) => ({

@@ -1,4 +1,4 @@
-import test from 'node:test'
+import { onTestFinished, test } from 'vite-plus/test'
 import assert from 'node:assert/strict'
 import { mkdtempSync, mkdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -17,26 +17,26 @@ const approved = template
     'aprovacao_referencia: aprovacao-explicita-na-conversa',
   )
 
-function fixture(t, content = approved) {
+function fixture(content = approved) {
   const root = mkdtempSync(join(tmpdir(), 'feature-analysis-'))
   const folder = join(root, 'docs', 'analises')
   mkdirSync(folder, { recursive: true })
   writeFileSync(join(folder, 'gestao-usuarios.md'), content)
-  t.after(() => rmSync(root, { recursive: true, force: true }))
+  onTestFinished(() => rmSync(root, { recursive: true, force: true }))
   return root
 }
 
-test('aprovação declarada válida retorna referência, nunca alegando comprovar consentimento', (t) => {
-  const result = checkAnalysisApproval('gestao-usuarios', fixture(t))
+test('aprovação declarada válida retorna referência, nunca alegando comprovar consentimento', () => {
+  const result = checkAnalysisApproval('gestao-usuarios', fixture())
   assert.equal(result.status, 'aprovada')
   assert.equal(result.referencia, 'aprovacao-explicita-na-conversa')
 })
-test('bloqueia rascunho e aprovação ausente', (t) => {
-  const root = fixture(t, template.replace('slug: exemplo-funcionalidade', 'slug: gestao-usuarios'))
+test('bloqueia rascunho e aprovação ausente', () => {
+  const root = fixture(template.replace('slug: exemplo-funcionalidade', 'slug: gestao-usuarios'))
   assert.throws(() => checkAnalysisApproval('gestao-usuarios', root), /não aprovada/)
 })
-test('bloqueia metadados pendentes, datas inválidas e slug divergente', (t) => {
-  const root = fixture(t)
+test('bloqueia metadados pendentes, datas inválidas e slug divergente', () => {
+  const root = fixture()
   const file = join(root, 'docs/analises/gestao-usuarios.md')
   writeFileSync(
     file,
@@ -51,8 +51,8 @@ test('bloqueia metadados pendentes, datas inválidas e slug divergente', (t) => 
   writeFileSync(file, approved.replace('slug: gestao-usuarios', 'slug: outra-funcionalidade'))
   assert.throws(() => checkAnalysisApproval('gestao-usuarios', root), /Slug diverge/)
 })
-test('bloqueia caminho malicioso, relatório incompleto e symlink', (t) => {
-  const root = fixture(t)
+test('bloqueia caminho malicioso, relatório incompleto e symlink', () => {
+  const root = fixture()
   assert.throws(() => checkAnalysisApproval('../gestao-usuarios', root), /Slug inválido/)
   assert.throws(() => checkAnalysisApproval('gestao/usuarios', root), /Slug inválido/)
   const path = join(root, 'docs/analises/gestao-usuarios.md')

@@ -1,4 +1,4 @@
-import test from 'node:test'
+import { test } from 'vite-plus/test'
 import assert from 'node:assert/strict'
 import { readFileSync, existsSync } from 'node:fs'
 
@@ -10,12 +10,12 @@ test('usa apenas Vite+ para desenvolvimento, build e testes', () => {
   assert.equal(pkg.scripts.dev, 'vp dev')
   assert.equal(pkg.scripts.build, 'vp build')
   assert.equal(pkg.scripts.test, 'vp test')
+  assert.equal(pkg.scripts['test:unit'], undefined)
   assert.equal(pkg.scripts.typecheck, 'vp check --no-fmt --no-lint')
   assert.equal(pkg.scripts.check, 'vp build && vp check --deny-warnings')
   assert.deepEqual(pkg.scripts.verify.split(' && '), [
     'npm run check:static',
     'npm run check:harness',
-    'npm run test:unit',
     'npm run check',
     'npm test',
   ])
@@ -37,6 +37,7 @@ test('mantém configuração única de app e testes', () => {
   assert.match(config, /defineConfig.*from 'vite-plus'/)
   assert.match(config, /tanstackStart\(\)/)
   assert.match(config, /test:\s*\{/)
+  assert.match(config, /scripts\/\*\*\/\*\.test\.mjs/)
   assert.match(config, /typeAware:\s*true/)
   assert.match(config, /typeCheck:\s*true/)
   assert.match(config, /fmt:\s*\{/)
@@ -50,7 +51,7 @@ test('workflows preservam contratos e auditoria sem duplicar verificações', ()
   const layout = readFileSync('.github/workflows/layout-audit.yml', 'utf8')
   assert.match(ci, /^\s*npm run check:static$/m)
   assert.match(ci, /^\s*npm run check:harness$/m)
-  assert.match(ci, /run: npm run test:unit/)
+  assert.doesNotMatch(ci, /run: npm run test:unit/)
   assert.match(ci, /run: npm run check/)
   assert.match(ci, /run: npm test/)
   assert.doesNotMatch(ci, /run: npm run typecheck/)

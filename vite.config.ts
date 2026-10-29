@@ -16,5 +16,5 @@ export default defineConfig({
     semi: false,
     ignorePatterns: ['.github/**', 'src/routeTree.gen.ts'],
   },
-  test: { include: ['src/**/*.test.ts'], environment: 'node' },
+  test: { include: ['src/**/*.test.ts', 'scripts/**/*.test.mjs'], environment: 'node' },
 })
