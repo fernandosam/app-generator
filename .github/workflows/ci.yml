@@ -22,10 +22,6 @@ jobs:
           cache: npm
       - name: Instalar dependências travadas
         run: npm ci --no-audit --no-fund
-      - name: Diagnóstico transitório da formatação README
-        run: |
-          npm exec -- vp fmt README.md --write
-          git diff -- README.md
       - name: Validar contratos e segurança do harness
         run: |
           npm run check:static
