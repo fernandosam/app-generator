@@ -16,12 +16,13 @@ export function RegistrationScreen() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const values = new FormData(event.currentTarget)
+    const email = values.get('email')
     setSubmitted({
       name: [values.get('firstName'), values.get('lastName')]
-        .map((value) => String(value ?? ''))
+        .map((value) => (typeof value === 'string' ? value : ''))
         .join(' ')
         .trim(),
-      email: String(values.get('email') ?? ''),
+      email: typeof email === 'string' ? email : '',
     })
   }
 
