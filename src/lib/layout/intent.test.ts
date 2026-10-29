@@ -11,13 +11,20 @@ describe('layout-intent orientado à tarefa, não à composição', () => {
     expect('composition' in plan).toBe(false)
   })
   it('aceita intenção mínima e deixa composição livre', () => {
-    const plan = planLayout({ screen: 'search', purpose: 'Encontrar registros', primaryAction: 'Buscar' })
+    const plan = planLayout({
+      screen: 'search',
+      purpose: 'Encontrar registros',
+      primaryAction: 'Buscar',
+    })
     expect(plan.intent.groups).toEqual([])
     expect(plan.intent.states).toEqual(['default'])
     expect(plan.intent.layout).toBeUndefined()
   })
   it('aceita indicação legada sem aplicá-la ao layout', () => {
-    const legacy = { ...registration, layout: { desktop: 'split', mobile: 'single_column', maxWidth: 'lg' } }
+    const legacy = {
+      ...registration,
+      layout: { desktop: 'split', mobile: 'single_column', maxWidth: 'lg' },
+    }
     expect(planLayout(legacy).intent.layout).toEqual(legacy.layout)
     const free = { ...registration, layout: { desktop: 'custom-masonry' } }
     expect(planLayout(free).intent.layout).toEqual(free.layout)

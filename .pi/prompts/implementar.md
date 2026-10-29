@@ -2,6 +2,7 @@
 description: Implementa no app-generator uma funcionalidade analisada e aprovada, com issues, testes e PR.
 argument-hint: '<nome-ou-slug> <rotas-separadas-por-virgula>'
 ---
+
 Leia `.agents/skills/implementar-funcionalidade/SKILL.md` e siga integralmente seu procedimento, além de `AGENTS.md`.
 
 Funcionalidade aprovada: $1

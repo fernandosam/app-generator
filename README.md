@@ -12,7 +12,7 @@ npx playwright install chromium
 npm run dev
 ```
 
-Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. O projeto traz inicialmente **Button, Card, Input e Spinner** versionados em `src/components/ui/`. Para adicionar **todas as primitivas e partículas oficiais** disponíveis no momento da execução, utilize o instalador manual abaixo. Ele consulta o manifesto do coss UI, instala o bundle `@coss/ui` e percorre todas as partículas `p-*` por lotes, usando o CLI shadcn e suas dependências.
+Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. `npm run check` executa contratos próprios, testes Node, build, testes Vite+ e `vp check` (formatação Oxfmt, lint Oxlint e tipos). `npm run typecheck` executa somente a verificação de tipos integrada ao Vite+. O projeto traz inicialmente **Button, Card, Input e Spinner** versionados em `src/components/ui/`. Para adicionar **todas as primitivas e partículas oficiais** disponíveis no momento da execução, utilize o instalador manual abaixo. Ele consulta o manifesto do coss UI, instala o bundle `@coss/ui` e percorre todas as partículas `p-*` por lotes, usando o CLI shadcn e suas dependências.
 
 ```bash
 npm run ui:install -- --dry-run      # lista itens/lotes sem instalar
@@ -41,24 +41,19 @@ O harness gerencia modelos, credenciais, contexto, alteração de código e aber
 
 O harness pode desenvolver layouts livremente — não há enum fechado para composições nem catálogo semântico de componentes. As quatro telas demonstrativas verificam tarefas diferentes:
 
-| Tela | Caminho | Interações locais |
-|---|---|---|
-| Cadastro | `/` | Validação e confirmação |
-| Login | `/login` | Validação de credenciais fictícias e confirmação sem autenticação |
-| Busca | `/search` | Filtro por texto/categoria e estado vazio |
-| Dashboard | `/dashboard` | Alternância de período, histórico e atualização simulada |
+| Tela      | Caminho      | Interações locais                                                 |
+| --------- | ------------ | ----------------------------------------------------------------- |
+| Cadastro  | `/`          | Validação e confirmação                                           |
+| Login     | `/login`     | Validação de credenciais fictícias e confirmação sem autenticação |
+| Busca     | `/search`    | Filtro por texto/categoria e estado vazio                         |
+| Dashboard | `/dashboard` | Alternância de período, histórico e atualização simulada          |
 
 Estas são **demonstrações**, sem backend, persistência ou autenticação real. O intuito é aferir resultados de composições livres por testes e evidências, não forçar um template.
 
 ## Auditoria e validação
 
 ```bash
-npm run check:static
-npm run check:harness
-npm run test:unit
-npm test
-npm run build
-npm run typecheck
+npm run check
 npm run layout:audit
 ```
 
@@ -80,10 +75,10 @@ npm run layout:compare -- alternativas/A-report.json alternativas/B-report.json
 
 ## GitHub Actions
 
-| Workflow | Gatilho | Finalidade |
-|---|---|---|
-| [CI](.github/workflows/ci.yml) | push/PR main; manual | contratos, independência de harness, testes, build e typecheck |
-| [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias |
+| Workflow                                           | Gatilho              | Finalidade                                                    |
+| -------------------------------------------------- | -------------------- | ------------------------------------------------------------- |
+| [CI](.github/workflows/ci.yml)                     | push/PR main; manual | contratos, independência de harness, testes, build e vp check |
+| [Layout Audit](.github/workflows/layout-audit.yml) | push/PR main; manual | cenários, screenshots, relatórios e artifacts por 14 dias     |
 
 Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automaticamente. O harness externo pode criar o PR, que passa pelas mesmas verificações de qualquer contribuição.
 
@@ -97,6 +92,7 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 Referências: [Vite+](https://viteplus.dev/guide/) · [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
 
 <!-- workflows-reutilizaveis-2026 -->
+
 ## Comandos reutilizáveis para recriar funcionalidades
 
 Execute o Pi na raiz do projeto (após confiar nos recursos do projeto e usar `/reload` se a sessão já estiver aberta):

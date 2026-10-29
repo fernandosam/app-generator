@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync, existsSync } from 'node:fs'
 
-const text = relative => readFileSync(new URL('../' + relative, import.meta.url), 'utf8')
+const text = (relative) => readFileSync(new URL('../' + relative, import.meta.url), 'utf8')
 const files = {
   analysis: '.agents/skills/analisar-funcionalidade/SKILL.md',
   implementation: '.agents/skills/implementar-funcionalidade/SKILL.md',
@@ -15,15 +15,20 @@ const files = {
 function frontmatter(body) {
   const match = /^---\n([\s\S]+?)\n---\n/.exec(body)
   assert(match, 'Arquivo Markdown sem frontmatter válido')
-  return Object.fromEntries(match[1].split('\n').map(line => {
-    const parsed = /^([a-z-]+):\s*(.+)$/.exec(line)
-    assert(parsed, 'Linha inválida de frontmatter: ' + line)
-    return [parsed[1], parsed[2]]
-  }))
+  return Object.fromEntries(
+    match[1].split('\n').map((line) => {
+      const parsed = /^([a-z-]+):\s*(.+)$/.exec(line)
+      assert(parsed, 'Linha inválida de frontmatter: ' + line)
+      return [parsed[1], parsed[2]]
+    }),
+  )
 }
 
 test('skills portáteis têm name e description conformes à especificação', () => {
-  for (const [key, name] of [['analysis', 'analisar-funcionalidade'], ['implementation', 'implementar-funcionalidade']]) {
+  for (const [key, name] of [
+    ['analysis', 'analisar-funcionalidade'],
+    ['implementation', 'implementar-funcionalidade'],
+  ]) {
     const data = frontmatter(text(files[key]))
     assert.equal(data.name, name)
     assert(data.description.length > 40 && data.description.length <= 1024)
@@ -32,7 +37,10 @@ test('skills portáteis têm name e description conformes à especificação', (
 })
 
 test('atalhos Pi usam argumentos posicionais e referenciam a skill correta', () => {
-  for (const [key, skill] of [['analyzePrompt', files.analysis], ['implementPrompt', files.implementation]]) {
+  for (const [key, skill] of [
+    ['analyzePrompt', files.analysis],
+    ['implementPrompt', files.implementation],
+  ]) {
     const body = text(files[key])
     const metadata = frontmatter(body)
     assert(metadata.description && metadata['argument-hint'])
@@ -51,7 +59,13 @@ test('análise é rascunho, documenta fatos/inferências/dúvidas e protege orig
   assert.match(a, /status inicial `rascunho`/)
   assert.match(a, /caminho\/arquivo.ext:linha-ou-faixa/)
   assert(template.includes('status: rascunho'))
-  for (const title of ['Evidências confirmadas', 'Inferências', 'Dúvidas', 'Mapa de telas e navegação', 'Escopo mínimo proposto']) {
+  for (const title of [
+    'Evidências confirmadas',
+    'Inferências',
+    'Dúvidas',
+    'Mapa de telas e navegação',
+    'Escopo mínimo proposto',
+  ]) {
     assert(template.includes('## ' + title))
   }
 })
@@ -72,5 +86,6 @@ test('documentação inclui comando curto, aprovação e rota demonstrativa real
   assert(docs.includes('/analisar "Gestão de usuários" "../sistema-legado"'))
   assert(docs.includes('/implementar "Gestão de usuários" "/usuarios,/usuarios/novo"'))
   assert(docs.includes('atualmente a tela de cadastro está em `/`'))
-  for (const path of Object.values(files)) assert(existsSync(new URL('../' + path, import.meta.url)))
+  for (const path of Object.values(files))
+    assert(existsSync(new URL('../' + path, import.meta.url)))
 })

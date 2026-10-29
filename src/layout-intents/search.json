@@ -10,9 +10,5 @@
       "Responsividade e acessibilidade verificáveis"
     ]
   },
-  "states": [
-    "default",
-    "interactive",
-    "content-stress"
-  ]
+  "states": ["default", "interactive", "content-stress"]
 }

@@ -44,15 +44,15 @@ Também é possível invocar as skills diretamente em harnesses compatíveis com
 
 ## Arquivos e responsabilidades
 
-| Caminho | Papel |
-| --- | --- |
-| `AGENTS.md` | Regras comuns, segurança, qualidade, testes e rastreabilidade |
-| `.agents/skills/analisar-funcionalidade/SKILL.md` | Análise sem escrita na origem nem implementação antecipada |
-| `.agents/skills/implementar-funcionalidade/SKILL.md` | Implementação dependente de autorização e issues prévias |
-| `.pi/prompts/analisar.md`, `.pi/prompts/implementar.md` | Atalhos Pi que encaminham argumentos às skills |
-| `docs/analises/TEMPLATE.md` | Formato do artefato persistente de análise |
-| `docs/analises/<slug>.md` | Rascunho ou análise aprovada da funcionalidade concreta |
-| `scripts/check-analysis.mjs` | Confere integridade declarativa do relatório, não prova consentimento |
+| Caminho                                                 | Papel                                                                 |
+| ------------------------------------------------------- | --------------------------------------------------------------------- |
+| `AGENTS.md`                                             | Regras comuns, segurança, qualidade, testes e rastreabilidade         |
+| `.agents/skills/analisar-funcionalidade/SKILL.md`       | Análise sem escrita na origem nem implementação antecipada            |
+| `.agents/skills/implementar-funcionalidade/SKILL.md`    | Implementação dependente de autorização e issues prévias              |
+| `.pi/prompts/analisar.md`, `.pi/prompts/implementar.md` | Atalhos Pi que encaminham argumentos às skills                        |
+| `docs/analises/TEMPLATE.md`                             | Formato do artefato persistente de análise                            |
+| `docs/analises/<slug>.md`                               | Rascunho ou análise aprovada da funcionalidade concreta               |
+| `scripts/check-analysis.mjs`                            | Confere integridade declarativa do relatório, não prova consentimento |
 
 ## Proteções essenciais
 

@@ -14,16 +14,32 @@ const fixture = () => {
 }
 const write = (cwd, runId, count = Infinity) => {
   let created = 0
-  for (const screen of index.screens) for (const scenario of screen.scenarios) for (const profile of profiles) {
-    if (created++ >= count) return
-    const data = { runId, id: screen.id, scenario: scenario.id, profile, viewport: 390, score: 90,
-      dimensions: { hierarchy: 90, grouping: 90, density: 90, responsive: 90 }, issues: [] }
-    writeFileSync(join(cwd, `artifacts/metrics/${screen.id}-${scenario.id}-${profile}.json`), JSON.stringify(data))
-  }
+  for (const screen of index.screens)
+    for (const scenario of screen.scenarios)
+      for (const profile of profiles) {
+        if (created++ >= count) return
+        const data = {
+          runId,
+          id: screen.id,
+          scenario: scenario.id,
+          profile,
+          viewport: 390,
+          score: 90,
+          dimensions: { hierarchy: 90, grouping: 90, density: 90, responsive: 90 },
+          issues: [],
+        }
+        writeFileSync(
+          join(cwd, `artifacts/metrics/${screen.id}-${scenario.id}-${profile}.json`),
+          JSON.stringify(data),
+        )
+      }
 }
-const aggregate = cwd => spawnSync(process.execPath, [resolve('scripts/aggregate-layout.mjs')], {
-  cwd, encoding: 'utf8', env: { ...process.env, LAYOUT_RUN_ID: 'current' },
-})
+const aggregate = (cwd) =>
+  spawnSync(process.execPath, [resolve('scripts/aggregate-layout.mjs')], {
+    cwd,
+    encoding: 'utf8',
+    env: { ...process.env, LAYOUT_RUN_ID: 'current' },
+  })
 
 test('reprova amostras ausentes sem inventar nota completa', () => {
   const dir = fixture()
@@ -34,7 +50,9 @@ test('reprova amostras ausentes sem inventar nota completa', () => {
     const output = JSON.parse(readFileSync(join(dir, 'artifacts/layout-report.json'), 'utf8'))
     assert.equal(output.complete, false)
     assert(output.missing.length > 0)
-  } finally { rmSync(dir, { recursive: true, force: true }) }
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
 })
 
 test('reprova métricas de outra execução', () => {
@@ -46,7 +64,9 @@ test('reprova métricas de outra execução', () => {
     const output = JSON.parse(readFileSync(join(dir, 'artifacts/layout-report.json'), 'utf8'))
     assert.equal(output.score, null)
     assert(output.stale > 0)
-  } finally { rmSync(dir, { recursive: true, force: true }) }
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
 })
 
 test('aprova cobertura completa da execução atual', () => {
@@ -59,5 +79,7 @@ test('aprova cobertura completa da execução atual', () => {
     assert.equal(output.complete, true)
     assert.equal(output.score, 90)
     assert.equal(output.missing.length, 0)
-  } finally { rmSync(dir, { recursive: true, force: true }) }
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
 })

@@ -1,7 +1,13 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { chooseCandidate } from './layout-candidates.mjs'
-const report = (label, criticalCount, majorCount, score, complete = true) => ({ label, criticalCount, majorCount, score, complete })
+const report = (label, criticalCount, majorCount, score, complete = true) => ({
+  label,
+  criticalCount,
+  majorCount,
+  score,
+  complete,
+})
 test('prefere menos problemas críticos à pontuação', () => {
   assert.equal(chooseCandidate([report('A', 1, 0, 99), report('B', 0, 1, 70)]).winner, 'B')
 })

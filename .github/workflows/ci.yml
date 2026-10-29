@@ -19,18 +19,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.18.0'
+          cache: npm
       - name: Instalar dependências travadas
         run: npm ci --no-audit --no-fund
-      - name: Confirmar toolchain Vite+
-        run: npm exec -- vp --version
-      - name: Verificações estáticas e testes do avaliador
-        run: |
-          npm run check:static
-          npm run check:harness
-          npm run test:unit
-      - name: Testes do projeto (Vite+)
-        run: npm test
-      - name: Build (gera routeTree do TanStack Start)
-        run: npm run build
-      - name: TypeScript
-        run: npm run typecheck
+      - name: Validar contratos, build, testes e vp check
+        run: npm run check

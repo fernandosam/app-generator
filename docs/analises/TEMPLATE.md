@@ -18,14 +18,14 @@ aprovacao_referencia: pendente
 ## Mapa de telas e navegação
 
 | Tela/rota na origem | Ação/transição | Evidência (arquivo:linha — símbolo) | Observações |
-| --- | --- | --- | --- |
-| A identificar | A identificar | Pendente | Pendente |
+| ------------------- | -------------- | ----------------------------------- | ----------- |
+| A identificar       | A identificar  | Pendente                            | Pendente    |
 
 ## Campos e validações
 
-| Tela | Campo | Obrigatoriedade e validação | Evidência |
-| --- | --- | --- | --- |
-| A identificar | A identificar | Pendente | Pendente |
+| Tela          | Campo         | Obrigatoriedade e validação | Evidência |
+| ------------- | ------------- | --------------------------- | --------- |
+| A identificar | A identificar | Pendente                    | Pendente  |
 
 ## Permissões
 
