@@ -4,7 +4,7 @@
 
 ## Executar localmente
 
-Requisitos: Node.js 22.18+ da linha 22, 24.11+ da linha 24 ou 26+, npm, acesso ao registro coss UI e Chromium do Playwright para testes E2E.
+Requisitos: Node.js 22.18+ da linha 22, 24.11+ da linha 24 ou 26+, npm e Chromium do Playwright para testes E2E.
 
 ```bash
 npm ci
@@ -12,18 +12,20 @@ npx playwright install chromium
 npm run dev
 ```
 
-Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. `npm run check` executa contratos próprios, testes Node, build, testes Vite+ e `vp check` (formatação Oxfmt, lint Oxlint e tipos). `npm run typecheck` executa somente a verificação de tipos integrada ao Vite+. O projeto traz inicialmente **Button, Card, Input e Spinner** versionados em `src/components/ui/`. Para adicionar **todas as primitivas e partículas oficiais** disponíveis no momento da execução, utilize o instalador manual abaixo. Ele consulta o manifesto do coss UI, instala o bundle `@coss/ui` e percorre todas as partículas `p-*` por lotes, usando o CLI shadcn e suas dependências.
+Acesse http://localhost:3000. A toolchain é exclusivamente **Vite+ 1.4.0** (`vite-plus` local): `npm run dev` usa `vp dev`, `npm test` usa `vp test` e `npm run build` usa `vp build`. Não é necessário instalar o CLI global nem manter um executor alternativo. `npm run check` executa contratos próprios, testes Node, build, testes Vite+ e `vp check` (formatação Oxfmt, lint Oxlint e tipos). `npm run typecheck` executa somente a verificação de tipos integrada ao Vite+. **Todas as 55 primitivas oficiais** do bundle `@coss/ui` estão versionadas em `src/components/ui/` (com auxiliares como `segmented-control`, hooks e utilitários). `npm ci`, build e CI usam exclusivamente os arquivos locais e dependências travadas no `package-lock.json`, sem download do registry coss UI.
+
+### Partículas oficiais — somente quando utilizadas
 
 ```bash
-npm run ui:install -- --dry-run      # lista itens/lotes sem instalar
-npm run ui:install                  # instala todos, preservando arquivos existentes
-npm run ui:install -- --overwrite   # opcional: autoriza atualizar arquivos existentes
-npm run ui:install -- --batch-size 10
+npm run skills:install                           # opcional: inclui skill oficial coss UI
+npm run ui:install -- @coss/p-button-1            # instala apenas esta partícula
+npm run ui:install -- @coss/p-alert-dialog-2 --overwrite  # atualização explícita
+npm run ui:install -- --help
 ```
 
-O comando exige conexão com o registry oficial e acesso ao npm. **É uma operação mutável manual**, nunca chamada durante `npm ci`, build ou CI. Os nomes e a quantidade são descobertos dinamicamente; `--dry-run` não gera um snapshot offline. Sem `--overwrite`, arquivos pré-existentes não são substituídos deliberadamente. Se um lote falhar, a execução é interrompida e poderá ser retomada após inspeção do estado do repositório e nova execução.
+O script usa o CLI **shadcn 4.1.0** (somente sob demanda). Uma chamada sem partículas retorna erro sem modificar o projeto, e `--overwrite` nunca é implícito. A skill oficial `cosscom/ui` já está configurada em `scripts/install-skills.sh` para uso por agentes externos, sem executor de IA no runtime.
 
-**Após instalar**, revise `git status`, `git diff`, as dependências e `package-lock.json`; confirme imports/compatibilidade das partículas com TanStack Start e execute `npm run check`, `npm run build` e os testes relevantes. Só então versionar alterações em PR. A instalação do catálogo inteiro **não implica** que cada partícula foi validada para SSR ou que integra automaticamente as telas. Os componentes já versionados permanecem disponíveis sem rodar este comando, e não há download dinâmico da UI no CI.
+Após adicionar uma partícula, revise `git diff`, imports, dependências, `package-lock.json` e compatibilidade com TanStack Start/SSR; execute `npm run check` e os testes relevantes antes de commitar. Partículas não utilizadas permanecem fora do código da aplicação. O snapshot das primitivas foi obtido do [coss UI oficial](https://github.com/cosscom/ui), revisão `890a79a5368b3cdebbdd860aa1908f2843fd7ddc` (licença MIT). Atualizações não são automáticas.
 
 ## Estilização e componentes
 

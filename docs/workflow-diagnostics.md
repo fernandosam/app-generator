@@ -13,4 +13,4 @@ npx playwright install --with-deps chromium
 npm run layout:audit
 ```
 
-A instalação **do catálogo completo** coss não é pré-requisito para o build: os componentes utilizados já estão versionados e `npm ci` reproduz suas dependências. Execute `npm run ui:install -- --dry-run` e `npm run ui:install` somente durante uma atualização **manual e revisada**, nunca para corrigir jobs de CI ou gerar arquivos mutáveis no workflow. Falhas de acesso ao registry nesse comando devem permanecer explícitas; não substituir componentes oficiais silenciosamente. Procedimentos de geração, inspeção e refinamento por harness externo: [AGENTS.md](../AGENTS.md).
+As primitivas coss são versionadas no Git e `npm ci` reproduz suas dependências. O registry só deve ser acessado quando for necessário **adicionar uma partícula específica** com `npm run ui:install -- @coss/p-button-1`; o comando sem argumentos falha por segurança. Não executar instalação de UI no CI nem substituir componentes silenciosamente. Procedimentos de geração, inspeção e refinamento por harness externo: [AGENTS.md](../AGENTS.md).
