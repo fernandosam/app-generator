@@ -1,10 +1,9 @@
 ---
-name: Feature request
-about: Suggest an idea for this project
+name: "🚀 Nova Funcionalidade / Melhoria"
+about: Sugira uma nova ideia, funcionalidade ou melhoria para este projeto.
 title: "[feat] [Escopo]: "
-labels: ''
-assignees: ''
-
+labels: ["enhancement", "feature"]
+assignees: ""
 ---
 
 ### 💡 Contexto da Funcionalidade

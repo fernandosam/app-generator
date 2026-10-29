@@ -1,10 +1,9 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: "🐛 Relato de Bug"
+about: Crie um relatório para nos ajudar a identificar e corrigir um erro.
 title: "[fix] [Escopo]: "
-labels: bug
-assignees: fernandosam
-
+labels: ["bug", "triage"]
+assignees: ""
 ---
 
 ### 📝 Descrição do Bug
