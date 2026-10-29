@@ -27,6 +27,10 @@ O instalador usa o **CLI oficial shadcn 4.1.0**, sem sincronizador nem descobert
 
 Após instalar, revisar o diff, os imports, dependências, lockfile e compatibilidade TanStack Start/SSR; executar `npm run verify` e testes relevantes antes de versionar. O snapshot das primitivas foi obtido do [coss UI oficial](https://github.com/cosscom/ui) na revisão `890a79a5368b3cdebbdd860aa1908f2843fd7ddc` (licença MIT). A atualização das primitivas também deve ocorrer em PR específico.
 
+### Cinco composições prioritárias prontas para reutilização
+
+Além das primitivas oficiais, o projeto incorpora cinco composições derivadas do coss UI: formulário validado, diálogo de edição, estado vazio, tabela paginada/ordenável e notificações. Elas estão em `src/components/particles/`, recebem dados reais por props e não instalam os exemplos fictícios do registry. Consulte [Composições coss prioritárias](docs/coss-particles.md) para contratos e origem.
+
 ## Estilização e componentes
 
 Priorize **componentes oficiais coss UI e suas variantes**, depois **utilitários Tailwind CSS v4**, reutilizando os **tokens semânticos globais**. Não reimplemente a aparência ou os estados de controles já disponíveis. CSS específico exige uma necessidade concreta não atendida, justificativa no PR e escopo mínimo. Consulte [Política de estilos](docs/ui-styling-policy.md) e as regras do `AGENTS.md`.

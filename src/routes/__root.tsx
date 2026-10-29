@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router'
+import { ToastProvider } from '@/components/ui/toast'
 import '../styles/app.css'
 
 export const Route = createRootRoute({
@@ -33,7 +34,9 @@ function Root() {
         <HeadContent />
       </head>
       <body>
-        <Outlet />
+        <ToastProvider>
+          <Outlet />
+        </ToastProvider>
         <Scripts />
       </body>
     </html>
