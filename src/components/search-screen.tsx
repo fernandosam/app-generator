@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react'
-import { ArrowUpRight, Search as SearchIcon, SlidersHorizontal } from 'lucide-react'
+import { Search as SearchIcon, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardHeader, CardPanel, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -59,7 +59,7 @@ export function SearchScreen() {
       <section className="showcase-results-section" data-layout-group="results" aria-labelledby="search-results-title">
         <div className="showcase-results-heading">
           <div><span className="showcase-eyebrow">CATÁLOGO LOCAL</span><h2 id="search-results-title">Resultados encontrados</h2></div>
-          <span className="showcase-counter" role="status" aria-live="polite" data-testid="search-count">{results.length} resultados</span>
+          <span className="showcase-counter" role="status" aria-live="polite" data-testid="search-count">{results.length} {results.length === 1 ? 'resultado' : 'resultados'}</span>
         </div>
         {results.length ? (
           <div className="showcase-result-grid">
@@ -70,7 +70,7 @@ export function SearchScreen() {
                   <CardTitle>{item.title}</CardTitle>
                   <CardDescription>{item.summary}</CardDescription>
                 </CardHeader>
-                <CardPanel><span className="showcase-card-footer">Referência de demonstração <ArrowUpRight size={16} aria-hidden="true" /></span></CardPanel>
+                <CardPanel><span className="showcase-card-footer">Conteúdo ilustrativo do catálogo</span></CardPanel>
               </Card>
             ))}
           </div>

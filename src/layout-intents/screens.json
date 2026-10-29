@@ -194,7 +194,7 @@
           },
           "expectText": {
             "selector": "[data-testid=search-count]",
-            "value": "1 resultados"
+            "value": "1 resultado"
           },
           "minGroups": 2,
           "primaryActions": 1

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Activity, ArrowUpRight, CalendarDays, CheckCircle2, ClipboardList, RefreshCw, TrendingUp, Users } from 'lucide-react'
+import { Activity, CalendarDays, CheckCircle2, ClipboardList, RefreshCw, TrendingUp, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardPanel, CardTitle } from '@/components/ui/card'
 import { DemoShell } from './demo-shell'
@@ -77,7 +77,7 @@ export function DashboardScreen() {
           <span className="showcase-eyebrow">SOBRE ESTE EXEMPLO</span>
           <h2>Dados para explorar, não para armazenar.</h2>
           <p>Este painel usa números fictícios para demonstrar estados, responsividade e hierarquia visual sem conectar serviços.</p>
-          <span className="showcase-tip-foot">Composição livre <ArrowUpRight size={16} aria-hidden="true" /></span>
+          <span className="showcase-tip-foot">Sem integração externa</span>
         </aside>
       </section>
     </DemoShell>
