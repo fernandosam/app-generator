@@ -80,3 +80,15 @@ Os workflows não usam secrets de IA, não iniciam modelos nem criam PRs automat
 - Para regras operacionais consulte [AGENTS.md](AGENTS.md); comandos resumidos em [docs/layout-workflow.md](docs/layout-workflow.md), diagnósticos em [docs/workflow-diagnostics.md](docs/workflow-diagnostics.md).
 
 Referências: [TanStack Start](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) · [coss UI](https://coss.com/ui/docs/get-started) · [Playwright](https://playwright.dev/docs/test-intro).
+
+<!-- workflows-reutilizaveis-2026 -->
+## Comandos reutilizáveis para recriar funcionalidades
+
+Execute o Pi na raiz do projeto (após confiar nos recursos do projeto e usar `/reload` se a sessão já estiver aberta):
+
+```text
+/analisar "Gestão de usuários" "../sistema-legado"
+/implementar "Gestão de usuários" "/usuarios,/usuarios/novo"
+```
+
+A primeira etapa consulta a origem em modo **somente leitura**, sem implementar; registra um rascunho em `docs/analises/<slug>.md`. A segunda só avança após **aprovação explícita**, verificação com `npm run analysis:check -- <slug>` e criação de **todas as issues antes de alterar código**. O app-generator não depende do Pi em runtime. Veja [docs/workflow-funcionalidades.md](docs/workflow-funcionalidades.md).
