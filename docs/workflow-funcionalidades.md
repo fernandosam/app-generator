@@ -61,7 +61,7 @@ Também é possível invocar as skills diretamente em harnesses compatíveis com
 - **Aprovação em duas etapas:** relatório marcado `aprovada` com referência, **e** autorização explícita do solicitante para implementar. Caso contrário, parar.
 - **Issues antes de código:** criar uma issue por tarefa, na ordem da implementação, com template apropriado; nenhuma tarefa sem issue.
 - **Demonstrativo existente:** atualmente a tela de cadastro está em `/`, não em `/exemplo`. A skill preserva todas as demonstrações existentes e não migra `/` sem autorização explícita.
-- **Validações:** `npm run check`, `npm run build` e `npm run layout:audit`. Não declarar inspeção visual sem ver screenshots reais e usar a verificação de evidências quando apropriado.
+- **Validações:** `npm run verify` e `npm run layout:audit`. Não declarar inspeção visual sem ver screenshots reais e usar a verificação de evidências quando apropriado.
 
 ## Escopo e limitações da automação
 
