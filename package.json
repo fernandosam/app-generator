@@ -16,10 +16,11 @@
     "check:static": "node scripts/check-static.mjs",
     "layout:compare": "node scripts/compare-layouts.mjs",
     "test:unit": "node --test scripts/*.test.mjs",
-    "check": "npm run check:static && npm run check:harness && npm run test:unit && vp build && vp test && vp check",
+    "check": "vp build && vp check",
     "check:harness": "node scripts/check-harness-independence.mjs",
     "layout:verify-visual": "node scripts/verify-visual-review.mjs",
-    "analysis:check": "node scripts/check-analysis.mjs"
+    "analysis:check": "node scripts/check-analysis.mjs",
+    "verify": "npm run check:static && npm run check:harness && npm run test:unit && npm run check && npm test"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
