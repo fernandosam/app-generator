@@ -57,7 +57,7 @@ export function createInstallPlan(manifest, batchSize = 25) {
     }
     names.add(item.name)
   }
-  const particles = [...names].sort()
+  const particles = [...names].sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
   if (particles.length === 0)
     throw new Error('Manifesto coss sem partículas; instalação cancelada.')
   if (!Number.isInteger(batchSize) || batchSize < 1 || batchSize > 100) {
