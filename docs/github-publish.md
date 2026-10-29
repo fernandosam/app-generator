@@ -1,28 +1,14 @@
 # Publicação de app-generator (repositório público)
 
-A publicação exige autenticação com uma conta que possa criar repositórios. Não incluir o `.env` nem `node_modules` no Git.
+O repositório já existe em [fernandosam/app-generator](https://github.com/fernandosam/app-generator). Não publicar `.env` ou `node_modules/`.
 
-## Método recomendado — GitHub CLI
+## Validação e publicação de mudanças
 
-1. Abra o terminal na raiz do projeto e autentique: `gh auth login`.
-2. Se o ZIP não vier com `.git`, execute:
+1. Trabalhar em uma branch de tarefa associada à sua issue; seguir [AGENTS.md](../AGENTS.md).
+2. Executar `npm install --no-audit --no-fund` e `npm run ui:install`, se necessário.
+3. Executar `npm run check:static`, `npm run check:harness`, `npm run test:unit`, `npm test`, `npm run build`, `npm run typecheck` e `npm run layout:audit`.
+4. Abrir PR para `main` utilizando o harness/cliente Git de sua escolha. Nenhum serviço de IA roda dentro do repositório.
+5. Conferir os workflows **CI** e **Layout Audit**, os relatórios e screenshots publicados.
+6. Manter o bloqueio de merge para falhas reais. Publicação da aplicação e hospedagem de produção são atividades separadas.
 
-   ```bash
-   git init -b main
-   git add .
-   git commit -m 'feat: initial context-aware app generator with TanStack Start'
-   ```
-
-3. Crie e publique: `gh repo create app-generator --public --source=. --remote=origin --push`.
-4. Confirme: `gh repo view --web`; inspecione a aba **Actions**.
-5. Configure `OPENAI_API_KEY` somente se quiser os workflows manuais de IA; em **Settings → Actions → General** permita que GitHub Actions criem pull requests.
-6. Execute **CI** e **Layout audit** manualmente pela aba Actions e corrija problemas reais antes de exigir as verificações em branch protection.
-
-Se o repositório **já estiver criado vazio** em `fernandosam/app-generator`, use `git remote add origin https://github.com/fernandosam/app-generator.git && git push -u origin main` em vez de `gh repo create`.
-
-## Limites
-
-- GitHub Actions **executa testes e gera evidências**, não hospeda a aplicação. Hospedagem de produção depende de escolha e configuração separadas.
-- `Generate screen` e `Refine layout` não são acionados por PRs externos, para impedir execução do modelo com secrets em código não confiável.
-- Scripts de agente têm acesso apenas ao workspace da execução; revisões e PRs devem passar por revisão de código.
-- Os componentes coss são obtidos do registro oficial no bootstrap; gerar e versionar o lockfile e os componentes após uma instalação verificada.
+Componentes coss são obtidos do registro oficial na preparação local/CI. Versionar os componentes e o lockfile após instalação verificada para maior reprodutibilidade.

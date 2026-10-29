@@ -37,8 +37,8 @@ for (const ref of refs.references) {
 for (const file of [
   'vite.config.ts', 'src/routes/__root.tsx', 'src/routes/index.tsx',
   'src/lib/layout/intent.ts', 'tests/layout.spec.ts',
-  'scripts/refine-layout.mjs', 'scripts/audit-layout.mjs',
+  'scripts/audit-layout.mjs', 'scripts/verify-visual-review.mjs',
+  'scripts/visual-review-contract.mjs', 'scripts/check-harness-independence.mjs',
   '.github/workflows/ci.yml', '.github/workflows/layout-audit.yml',
-  '.github/workflows/generate-screen.yml', '.github/workflows/refine-layout.yml',
 ]) assert(existsSync(file), `Arquivo ausente: ${file}`)
-console.log(`OK: TanStack Start + coss, ${index.screens.length} tela(s), ${index.screens.reduce((a,s)=>a+s.scenarios.length,0)} cenários e GitHub Actions.`)
+console.log(`OK: TanStack Start + coss, ${index.screens.length} tela(s), ${index.screens.reduce((a,s)=>a+s.scenarios.length,0)} cenários e pipelines de validação.`)

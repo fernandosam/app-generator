@@ -1,17 +1,14 @@
-# Workflow diagnostics
+# Diagnóstico dos workflows
 
-This repository uses two automated workflows (CI and Layout Audit) and two manual AI workflows.
+O repositório executa **dois workflows independentes de agentes**: CI e Layout Audit. Nenhum job de IA, credencial de modelo ou CLI de agente é necessário.
 
-The PR checks are the authoritative source for the failures that need fixing. Inspect
-the failing job and its *first failing step*, then reproduce the same command locally.
-Avoid skipping failing tests or turning real failures into warnings.
-
-Current verification commands:
+O primeiro passo com falha de um job de PR indica o diagnóstico inicial. Reproduza o comando localmente; não transforme falhas reais em warnings.
 
 ```sh
 npm install --no-audit --no-fund
 npm run ui:install
 npm run check:static
+npm run check:harness
 npm run test:unit
 npm test
 npm run build
@@ -20,5 +17,4 @@ npx playwright install --with-deps chromium
 npm run layout:audit
 ```
 
-The COSS registry install is a prerequisite to building this starter. Fail early if
-the registry or npm is unavailable; do not silently replace coss UI with unrelated components.
+A instalação dos componentes coss a partir do registro oficial é pré-requisito do build deste starter. Falhar explicitamente se npm ou o registro estiverem indisponíveis; não substituir componentes oficiais silenciosamente. Procedimentos de geração, inspeção e refinamento por harness externo: [AGENTS.md](../AGENTS.md).

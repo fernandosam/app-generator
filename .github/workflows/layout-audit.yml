@@ -23,6 +23,8 @@ jobs:
         run: |
           npm install --no-audit --no-fund
           npm run ui:install
+      - name: Verificar independência de agentes
+        run: npm run check:harness
       - name: Instalar Chromium do Playwright
         run: npx playwright install --with-deps chromium
       - name: Auditar cenários cadastrados
